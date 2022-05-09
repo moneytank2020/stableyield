@@ -1,0 +1,113 @@
+* {
+  font-family: 'proxima-nova', sans-serif !important;
+  text-rendering: optimizeLegibility;
+  box-shadow: none !important;
+}
+
+.makeStyles-accordion-161 {
+  border-radius: 23px !important;
+}
+.makeStyles-link-26 span {
+  color: #fff;
+  text-transform: capitalize !important;
+}
+
+.makeStyles-details-163 {
+  border-radius: 23px !important;
+}
+
+.makeStyles-dark-17 {
+  background-color: #1d1931 !important;
+}
+
+.makeStyles-container-148 {
+  border: 1px solid #121127;
+  margin: 8px 0 2rem;
+  padding: 24px;
+  position: relative;
+  justify-content: space-between;
+  border-radius: 23px !important;
+  background-color: #1d1930;
+}
+.makeStyles-active-255 {
+  color: #532aed !important;
+}
+
+.makeStyles-track-205 {
+  color: #6f4df2 !important;
+  height: 5px;
+}
+
+
+.makeStyles-thumb-204 {
+  color: #6f4df2 !important;
+}
+
+.makeStyles-track-254 {
+  color: #532aed !important;
+  height: 5px;
+}
+
+.makeStyles-thumb-253 {
+  color: #5e3ed3 !important;
+}
+
+.makeStyles-valueLabel-251 > span {
+  color: #532aed !important;
+}
+
+.makeStyles-showDetailButtonContained-186 {
+  background-color: #6f4df2;
+}
+
+.makeStyles-valueLabel-202 > span {
+  color: #6f4df2;
+}
+
+//.makeStyles-root-110 {
+//  border: 3px solid #6f4ef2;
+//  border-radius: 3px !important;
+//  margin: 24px 0;
+//  padding: 24px;
+//  background-color: #121127;
+//}
+
+//.makeStyles-title-112 {
+//  color: #6f4df2;
+//  font-size: 16px;
+//  font-weight: 700;
+//}
+//.makeStyles-text-113 {
+//  color: #8b7fbb;
+//  font-size: 16px;
+//  font-weight: 400;
+//}
+.fa,
+.far,
+.fas {
+  font-family: 'Font Awesome 5 Free' !important;
+}
+
+.fab {
+  font-family: 'Font Awesome 5 Brands' !important;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #fbf9f6;
+}
+
+.tooltip-toggle {
+  cursor: default;
+
+  * {
+    pointer-events: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .hidden-xs {
+    display: none !important;
+  }
+}

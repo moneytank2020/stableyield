@@ -1,0 +1,15 @@
+const { ethers } = require('hardhat');
+
+const initializeVault = async () => {
+    const signers = await ethers.getSigners()
+    let signer =""
+    for(const sig of signers){
+        signer = sig
+        console.log(sig.address)
+    }
+    console.log('signer:',signer.address)
+    // const userAddress = await signer.getAddress();
+    const vault = await ethers.getContractFactory("Code7Vault")
+    const Vault= await vault.attach("0x9310869dd82F735aa783424669Ec0d8A4b9826a5")
+    await Vault.initialize("0xDe6877e54D0e8Bd325F9AE5F4Ec1e27A0AAa2C41")
+}

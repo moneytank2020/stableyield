@@ -1,0 +1,11 @@
+"use strict";
+exports.__esModule = true;
+exports.TAX_OFFICE_ADDR = exports.ZAPPER_ROUTER_ADDR = exports.SPOOKY_ROUTER_ADDR = exports.WFTM_TICKER = exports.FTM_TICKER = exports.TBOND_TICKER = exports.TSHARE_TICKER = exports.TOMB_TICKER = void 0;
+exports.TOMB_TICKER = 'APEX';
+exports.TSHARE_TICKER = 'ASHARE';
+exports.TBOND_TICKER = 'ABOND';
+exports.FTM_TICKER = 'FTM';
+exports.WFTM_TICKER = 'WFTM';
+exports.SPOOKY_ROUTER_ADDR = '0xF491e7B69E4244ad4002BC14e878a34207E38c29';
+exports.ZAPPER_ROUTER_ADDR = '0x8bb1fe7a50082623b372d857b4d07911c786a3e9';
+exports.TAX_OFFICE_ADDR = '0x2d24cae5ce7fe5ae16d5fdc022c5f67006acf5fb';
