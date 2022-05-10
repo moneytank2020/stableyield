@@ -6,6 +6,18 @@ export const allNetworks = [
     id: 250,
     hash: '/fantom',
   },
+  {
+    name: 'Ethereum',
+    asset: 'ETH',
+    id: 1,
+    hash: '/eth',
+  },
+  {
+    name: 'Binance',
+    asset: 'BNB',
+    id: 56,
+    hash: '/bnb',
+  },
 ];
 
 const network = allNetworks.find(n => window.location.hash.startsWith('#' + n.hash));

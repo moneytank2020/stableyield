@@ -21,7 +21,7 @@ export default function ReferalCard() {
                 </Typography>
             </Grid>
             <Box display="flex" borderTop={1} borderBottom={1} borderLeft={1} borderRight={1} sx={{width:'100%', padding:10}}>
-                <TextField style={{ fontSize: 18, width: '100%' }}  InputProps={{ disableUnderline: true, readonly:true }} id="outlined-basic" value="http://www.google.com/"/>
+                <TextField style={{ fontSize: 18, width: '100%' }}  InputProps={{ disableUnderline: true, readOnly:true }} id="outlined-basic" value="http://www.google.com/"/>
             </Box>
             <Typography>
                 Earn of the used to bake beans from anyone who uses your referral link

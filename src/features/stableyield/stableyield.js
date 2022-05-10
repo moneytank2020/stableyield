@@ -53,6 +53,8 @@ export default function StableYield() {
   const activePoolCount = 0
   return (
     <Grid container className={classes.container} direction="column">
+      {console.log("testing")}
+      {web3?(
       <Grid item>
         <Grid container direction="row" spacing={2}>
           <Grid item xs={12} md={6}>
@@ -77,36 +79,7 @@ export default function StableYield() {
           </Grid>
         </Grid>
       </Grid>
+      ):("")}
     </Grid>
-
-    // <Grid container className={classes.container} direction="column">
-    //   <Grid md={12} lxs={12} container direction="row" spacing={2}>
-    //     <Grid xs={12} md={6} item direction="column" spacing={2}>
-    //       <Card>
-    //         <Typography>
-    //             The Apex Lottery
-    //         </Typography>
-    //       </Card>
-    //       <Box/>
-    //       <Card>
-    //         <Typography>
-    //             The Apex Lottery
-    //         </Typography>
-    //       </Card>
-    //     </Grid>
-    //     <Grid xs={12} md={6} item direction="column">
-    //       <Card>
-    //         <Typography>
-    //             The Apex Lottery
-    //         </Typography>
-    //       </Card>
-    //       <Card>
-    //         <Typography>
-    //             The Apex Lottery
-    //         </Typography>
-    //       </Card>
-    //     </Grid>
-    //   </Grid>
-    // </Grid>
   );
 }

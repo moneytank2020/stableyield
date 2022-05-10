@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import { networkSettings, networkSetup } from 'common/networkSetup';
-import { getNetworkAppUrl, getNetworkFriendlyName } from 'features/helpers/getNetworkData';
+import { getNetworkAppUrl, getNetworkFriendlyName,getHash } from 'features/helpers/getNetworkData';
 import { makeStyles } from '@material-ui/core/styles';
 import styles from './styles';
 import { useTranslation } from 'react-i18next';
@@ -73,34 +73,39 @@ export function NetworkConnectNotice({
       </>
     );
   } else if (!isCorrectNetwork) {
-    notice = (
-      <>
-        <div className={classes.message}>
-          {t('Network-Supports', { network: targetNetworkFriendlyName })}{' '}
-          {isSupportedNetwork
-            ? t('Network-ConnectedTo', { network: supportedNetwork.name })
-            : t('Network-ConnectedUnsupported')}
-        </div>
-        <div className={classes.actions}>
-          <Button onClick={targetNetworkSetup} className={classes.button}>
-            {t('Network-SwitchToNetwork', { network: targetNetworkFriendlyName })}
-          </Button>
-          {isSupportedNetwork ? (
-            <Button
-              onClick={() => networkRedirect(supportedNetwork.url)}
-              className={classes.button}
-            >
-              {t('Network-GoToApp', { network: supportedNetwork.name })}
+    console.log("wrong network")
+    if(getHash(networkId) != undefined){
+      networkRedirect(supportedNetwork.url)
+    }else{
+      notice = (
+        <>
+          <div className={classes.message}>
+            {t('Network-Supports', { network: targetNetworkFriendlyName })}{' '}
+            {isSupportedNetwork
+              ? t('Network-ConnectedTo', { network: supportedNetwork.name })
+              : t('Network-ConnectedUnsupported')}
+          </div>
+          <div className={classes.actions}>
+            <Button onClick={targetNetworkSetup} className={classes.button}>
+              {t('Network-SwitchToNetwork', { network: targetNetworkFriendlyName })}
             </Button>
-          ) : null}
-          <Button onClick={disconnectWallet} className={classes.button}>
-            {t('Network-DisconnectWallet')}
-          </Button>
-        </div>
-        <div className={classes.note}>{t('Network-SwitchNote')}</div>
-        {networkSetupError ? <div className={classes.error}>{networkSetupError}</div> : ''}
-      </>
-    );
+            {isSupportedNetwork ? (
+              <Button
+                onClick={() => networkRedirect(supportedNetwork.url)}
+                className={classes.button}
+              >
+                {t('Network-GoToApp', { network: supportedNetwork.name })}
+              </Button>
+            ) : null}
+            <Button onClick={disconnectWallet} className={classes.button}>
+              {t('Network-DisconnectWallet')}
+            </Button>
+          </div>
+          <div className={classes.note}>{t('Network-SwitchNote')}</div>
+          {networkSetupError ? <div className={classes.error}>{networkSetupError}</div> : ''}
+        </>
+      );
+    }
   } else if (!haveAddress) {
     notice = (
       <>

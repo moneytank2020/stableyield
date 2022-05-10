@@ -8,9 +8,5 @@ import { VaultPage } from 'features/vault';
 export default {
   path: 'common',
   indexRoute: { component: HomePage },
-  childRoutes: [
-    { path: '/#/stake', component: StakePage },
-    { path: '/#/stake/pool/:id', component: PoolPage },
-    { path: '/#/vault/:vaultId', component: VaultPage },
-  ],
+  childRoutes: [],
 };
