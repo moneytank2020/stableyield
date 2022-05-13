@@ -1,5 +1,3 @@
 {
- "treasuryAddress":"0xabF6c27D67aF166efe7eA09bA1583B985d7FEf61",
-"vaultAddress":"0xd9aFcE942F8B41EAA90854d3E3f5125D7AA09239",
-"strategyAddress":"0x3527A119AABbcD3DF78b2bA092130AabE10267Bb"
+ "stableYieldContract":"0xbFd1bf336a68442dA3e05Ca4d8d9Afd0D53D25e2"
 }

@@ -7,6 +7,12 @@ export const allNetworks = [
     hash: '/fantom',
   },
   {
+    name: 'Binance',
+    asset: 'BNB',
+    id: 31337,
+    hash: '/localhost',
+  },
+  {
     name: 'Ethereum',
     asset: 'ETH',
     id: 1,

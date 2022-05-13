@@ -4,28 +4,26 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import { useConnectWallet } from 'features/home/redux/hooks';
 import styles from './styles';
-import { Avatar, Box, Button, Card, colors, TextField, Typography } from '@material-ui/core';
+import { Box, Button, Card, TextField, Typography } from '@material-ui/core';
+import { useFetchApproval } from './redux/fetchApproval';
+
 
 const FETCH_INTERVAL_MS = 15 * 1000;
 
 const useStyles = makeStyles(styles);
 
-export default function InvestCard() {
+export default function InvestCard(){
     const { t } = useTranslation();
     const { web3, address } = useConnectWallet();
+    const { fetchApproval, fetchNeedApproval } = useFetchApproval({ web3: web3 })
     const classes = useStyles();
+    const handleClick = async()=>{
+        if(!fetchNeedApproval){
+            await fetchApproval({web3})
+        }else{
 
-    useEffect(() => {
-        const fetch = () => {
-            if (address && web3) {
-
-            }
-        };
-        fetch();
-
-        const id = setInterval(fetch, FETCH_INTERVAL_MS);
-        return () => clearInterval(id);
-    }, []);
+        }
+    }
 
     return (
         <Card style={{ padding: 20 , borderRadius:10}}>
@@ -63,7 +61,7 @@ export default function InvestCard() {
                     Bonds
                 </Typography>
             </Box>
-            <Button variant="contained" style={{ width: '100%', marginTop: 20, marginBottom: 20, backgroundColor: "#11ad00" }}>BUY</Button>
+            <Button variant="contained" onClick={()=>{handleClick()}} style={{ width: '100%', marginTop: 20, marginBottom: 20, backgroundColor: "#11ad00" }}>{fetchNeedApproval?"BUY":"APPROVE"}</Button>
             <Typography style={{ fontSize: 18 }}>
                 Current APY:
             </Typography>

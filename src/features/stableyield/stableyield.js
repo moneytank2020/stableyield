@@ -1,23 +1,16 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
-import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
 import Grid from '@material-ui/core/Grid';
-import LinearProgress from "@material-ui/core/LinearProgress";
-import TVLLoader from './TVLLoader/TVLLoader';
-import NetworksToggle from 'components/NetworksToggle/NetworksToggle';
 import { useConnectWallet } from 'features/home/redux/hooks';
 import styles from './styles';
-import { formatGlobalTvl } from 'features/helpers/format';
 import { getNetworkFriendlyName } from '../helpers/getNetworkData';
-import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
-import { Avatar, Button, Card, colors, Divider, TableRow, TextField, Typography } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
-import { SpaceBar } from '@material-ui/icons';
 import InvestCard from './investcard';
 import BondCard from './bondcard';
 import ReferalCard from './referalcard';
 import RewardCard from './rewardcard';
+import { useFetchApproval } from './redux/fetchApproval';
+import { hasApproved } from 'api/appApi';
 
 const FETCH_INTERVAL_MS = 15 * 1000;
 
@@ -26,6 +19,7 @@ const useStyles = makeStyles(styles);
 export default function StableYield() {
   const { t } = useTranslation();
   const { web3, address, networkId, connected } = useConnectWallet();
+  const { fetchHasApproved, fetchHasApprovedPending, fetchNeedApproval } = useFetchApproval({ web3: web3 })
   const classes = useStyles();
 
   useEffect(() => {
@@ -37,49 +31,58 @@ export default function StableYield() {
   useEffect(() => {
     const fetch = () => {
       if (address && web3) {
-
+        // fetchApproval({web3})
       }
     };
     fetch();
-
     const id = setInterval(fetch, FETCH_INTERVAL_MS);
     return () => clearInterval(id);
 
     // Adding tokens and pools to this dep list, causes an endless loop, DDoSing the api
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchHasApprovedPending,fetchNeedApproval]);
+
+
+  useEffect(() => {
+    const getApproval = ()=>{
+      if (address && web3) {
+        fetchHasApproved({ web3 })
+      }
+    }
+    getApproval()
+  }, [web3]);
+
 
   const chainNameLowercase = getNetworkFriendlyName().toLowerCase();
   const activePoolCount = 0
   return (
     <Grid container className={classes.container} direction="column">
-      {console.log("testing")}
-      {web3?(
-      <Grid item>
-        <Grid container direction="row" spacing={2}>
-          <Grid item xs={12} md={6}>
-            <Grid container direction="column" spacing={2}>
-              <Grid item>
-                <InvestCard/>
-              </Grid>
-              <Grid item>
-                <BondCard/>
+      {web3 ? (
+        <Grid item>
+          <Grid container direction="row" spacing={2}>
+            <Grid item xs={12} md={6}>
+              <Grid container direction="column" spacing={2}>
+                <Grid item>
+                  <InvestCard hasApproved={fetchNeedApproval} />
+                </Grid>
+                <Grid item>
+                  <BondCard hasApproved={fetchNeedApproval} />
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Grid container direction="column" spacing={2}>
-              <Grid item>
-                <ReferalCard/>
-              </Grid>
-              <Grid item>
-                <RewardCard/>
+            <Grid item xs={12} md={6}>
+              <Grid container direction="column" spacing={2}>
+                <Grid item>
+                  <ReferalCard />
+                </Grid>
+                <Grid item>
+                  <RewardCard hasApproved={fetchNeedApproval}/>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
-      ):("")}
+      ) : ("")}
     </Grid>
   );
 }

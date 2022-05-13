@@ -3,6 +3,7 @@ import { connectRouter } from 'connected-react-router';
 import history from './history';
 import homeReducer from 'features/home/redux/reducer';
 import commonReducer from 'features/common/redux/reducer';
+import stableYieldReducer from 'features/stableyield/redux/reducers'
 
 // NOTE 1: DO NOT CHANGE the 'reducerMap' name and the declaration pattern.
 // This is used for Rekit cmds to register new features, remove features, etc.
@@ -13,6 +14,7 @@ const reducerMap = {
   router: connectRouter(history),
   home: homeReducer,
   common: commonReducer,
+  stableyield:stableYieldReducer
 };
 
 export default combineReducers(reducerMap);

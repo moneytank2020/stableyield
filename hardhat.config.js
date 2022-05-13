@@ -28,7 +28,7 @@ module.exports = {
   networks: {
     hardhat:{
       forking:{
-        url:"https://speedy-nodes-nyc.moralis.io/eba52a71b5f0e25d93a7b668/fantom/mainnet",
+        url:"https://speedy-nodes-nyc.moralis.io/eba52a71b5f0e25d93a7b668/bsc/mainnet/archive",
         enabled:true
       }
     },

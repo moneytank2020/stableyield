@@ -6,27 +6,26 @@ import { useConnectWallet } from 'features/home/redux/hooks';
 import styles from './styles';
 import { Avatar, Button, Card, colors, TextField, Typography } from '@material-ui/core';
 import { Box } from '@mui/material';
+import { useFetchApproval } from './redux/fetchApproval';
 
 const FETCH_INTERVAL_MS = 15 * 1000;
 
 const useStyles = makeStyles(styles);
 
-export default function BondCard() {
+export default function BondCard(
+    hasApproved
+) {
     const { t } = useTranslation();
     const { web3, address } = useConnectWallet();
     const classes = useStyles();
+    const { fetchApproval, fetchApprovalPending, fetchApprovalError, fetchHasApproved, fetchHasApprovedPending, fetchHasApprovedError, fetchNeedApproval } = useFetchApproval({ web3: web3 })
+    const handleClick = async()=>{
+        if(!fetchNeedApproval){
+            await fetchApproval({web3})
+        }else{
 
-    useEffect(() => {
-        const fetch = () => {
-            if (address && web3) {
-
-            }
-        };
-        fetch();
-
-        const id = setInterval(fetch, FETCH_INTERVAL_MS);
-        return () => clearInterval(id);
-    }, []);
+        }
+    }
 
     return (
         <Card style={{ padding: 20 }}>
@@ -65,7 +64,7 @@ export default function BondCard() {
                 </Grid>
             </Grid>
             {/* <TextField style={{ fontSize: 18, width: '100%' }} id="outlined-basic" variant="outlined" />*/}
-            <Button variant="contained" style={{ width: '100%', marginTop: 10, marginBottom: 20, backgroundColor: "#0066ff" }}>Withdrawal</Button>
+            <Button variant="contained" onClick={()=>{handleClick()}} style={{ width: '100%', marginTop: 10, marginBottom: 20, backgroundColor: "#0066ff" }}>{fetchNeedApproval?"Withdrawal":"Approve"}</Button>
         </Card>
     );
 }
