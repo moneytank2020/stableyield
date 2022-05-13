@@ -4,4 +4,5 @@ export { fetchApproval } from './fetchApproval'
 export { fetchApyAndRate } from './fetchApyAndRate'
 export { fetchTaxFee } from './fetchTaxFee'
 export { fetchUserBalance } from './fetchUserBalance'
+export { fetchContractBalance } from './fetchContractBalance'
 

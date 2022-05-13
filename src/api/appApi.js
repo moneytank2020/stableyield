@@ -72,6 +72,14 @@ const getUserTokenBalance = async(web3) =>{
     return ethers.utils.formatEther(balance.toString())
 }
 
+const getContractTokenBalance = async(web3) =>{
+    const contract = await getContract(web3)
+    const signer = await getSigner(web3)
+    var balance = await contract.getBalance()
+    return ethers.utils.formatEther(balance.toString())
+}
+
+
 const getApyAndRate = async(web3)=>{
     const stableYieldContract = await getContract(web3)
     var amount = await stableYieldContract.TOKENS_TO_GENERATE_1BOND()
@@ -117,7 +125,8 @@ export{
     sellTokens,
     getApyAndRate,
     getTaxFee,
-    getUserTokenBalance
+    getUserTokenBalance,
+    getContractTokenBalance
 }
 
 // const getRewardTokenBalance = async(web3) => {

@@ -21,7 +21,10 @@
     fetchTax:"0%",
     fetchUserBalancePending: false, 
     fetchUserBalanceError:"", 
-    fetchUserBalanceValue:"0"
+    fetchUserBalanceValue:"0",
+    fetchContractBalancePending:false, 
+    fetchContractBalanceError:"", 
+    fetchContractBalanceValue:"0"
   }
 
   export default initialState;

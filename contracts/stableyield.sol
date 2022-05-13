@@ -127,7 +127,7 @@ contract StableYield is Context, Ownable {
     }
     
     function getBalance() public view returns(uint256) {
-        return token.balanceOf(this)
+        return token.balanceOf(address(this));
     }
     
     function getMyBonds(address adr) public view returns(uint256) {
