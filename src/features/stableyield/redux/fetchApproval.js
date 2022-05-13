@@ -92,7 +92,6 @@ export function useFetchApproval() {
 }
 
 export function reducer(state, action) {
-    console.log("appprove success:", action.type)
     switch (action.type) {
         case FETCH_APPROVAL_BEGIN:
             return {

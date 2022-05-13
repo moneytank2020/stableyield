@@ -7,6 +7,7 @@ import styles from './styles';
 import { Avatar, Button, Card, colors, TextField, Typography } from '@material-ui/core';
 import { Box } from '@mui/material';
 import { useFetchApproval } from './redux/fetchApproval';
+import { useFetchTaxFee } from './redux/fetchTaxFee'
 
 const FETCH_INTERVAL_MS = 15 * 1000;
 
@@ -18,53 +19,62 @@ export default function BondCard(
     const { t } = useTranslation();
     const { web3, address } = useConnectWallet();
     const classes = useStyles();
-    const { fetchApproval, fetchApprovalPending, fetchApprovalError, fetchHasApproved, fetchHasApprovedPending, fetchHasApprovedError, fetchNeedApproval } = useFetchApproval({ web3: web3 })
-    const handleClick = async()=>{
-        if(!fetchNeedApproval){
-            await fetchApproval({web3})
-        }else{
+    const { fetchApproval, fetchNeedApproval } = useFetchApproval({ web3 })
+    const { fetchTaxFee, fetchTax } = useFetchTaxFee({ web3 })
+
+
+    const handleClick = async () => {
+        if (!fetchNeedApproval) {
+            await fetchApproval({ web3 })
+        } else {
 
         }
     }
+
 
     return (
         <Card style={{ padding: 20 }}>
             <Grid container direction="row">
                 <Grid item md={6} xs={6}>
-                    <Typography style={{marginBottom:10,fontSize: 28 }}>
+                    <Typography style={{ marginBottom: 10, fontSize: 28 }}>
                         Sell Bonds
                     </Typography>
                 </Grid>
-                <Grid item md={6} xs={6}  display="flex" >
+                <Grid item md={6} xs={6} display="flex" >
                     <Box display="flex" justifyContent="flex-end">
-                        <Typography style={{marginTop:7,fontSize: 18 }}>
+                        <Typography style={{ marginTop: 7, fontSize: 18 }}>
                             Balance:
                         </Typography>
                     </Box>
                 </Grid>
             </Grid>
-            <Box display="flex" flexDirection="row" borderTop={1} borderBottom={1} borderLeft={1} borderRight={1} sx={{padding:2, marginBottom: 1}}>
-                <TextField style={{ fontSize: 18, width: '100%' }}  InputProps={{ disableUnderline: true }} id="outlined-basic"/>
-                <Typography style={{ fontSize: 18, paddingTop:"0.5%" }}>
+            <Box display="flex" flexDirection="row" borderTop={1} borderBottom={1} borderLeft={1} borderRight={1} sx={{ padding: 2, marginBottom: 1 }}>
+                <TextField style={{ fontSize: 18, width: '100%' }} InputProps={{ disableUnderline: true }} id="outlined-basic" />
+                <Typography style={{ fontSize: 18, paddingTop: "0.5%" }}>
                     USDC
                 </Typography>
             </Box>
             <Grid container direction="row">
                 <Grid item md={6} xs={6}>
-                    <Typography style={{color:"#ff0000", marginBottom: 10, fontSize: 18 }}>
-                        Tax:
-                    </Typography>
+                    <Box display="flex" flexDirection="row">
+                        <Typography style={{ color: "#ff0000", marginBottom: 10, fontSize: 18 }}>
+                            Tax:
+                        </Typography>
+                        <Typography style={{ color: "#ff0000", marginLeft: 5, fontSize: 18 }}>
+                            {fetchTax}
+                        </Typography>
+                    </Box>
                 </Grid>
                 <Grid item md={6} xs={6} display="flex">
                     <Box display="flex" flexDirection="row" justifyContent="flex-end">
-                    <Typography style={{fontSize: 18 }}>
-                        Total:
-                    </Typography>
+                        <Typography style={{ fontSize: 18 }}>
+                            Total:
+                        </Typography>
                     </Box>
                 </Grid>
             </Grid>
             {/* <TextField style={{ fontSize: 18, width: '100%' }} id="outlined-basic" variant="outlined" />*/}
-            <Button variant="contained" onClick={()=>{handleClick()}} style={{ width: '100%', marginTop: 10, marginBottom: 20, backgroundColor: "#0066ff" }}>{fetchNeedApproval?"Withdrawal":"Approve"}</Button>
+            <Button variant="contained" onClick={() => { handleClick() }} style={{ width: '100%', marginTop: 10, marginBottom: 20, backgroundColor: "#0066ff" }}>{fetchNeedApproval ? "Withdrawal" : "Approve"}</Button>
         </Card>
     );
 }

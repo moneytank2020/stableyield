@@ -11,7 +11,14 @@
     fetchBalancesDone: false,
     fetchBalancesPending: false,
     buyTokensPending: false,
-    buyTokensError:""
+    buyTokensError:"",
+    fetchApyAndRatePending:false,
+    fetchApyAndRateError:"",
+    fetchApy:"0%",
+    fetchRate:"0%",
+    fetchTaxFeePending:false,
+    fetchTaxFeeError:"",
+    fetchTax:"0%"
   }
 
   export default initialState;

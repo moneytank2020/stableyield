@@ -34,8 +34,8 @@ export function useBuyToken() {
     const dispatch = useDispatch();
 
     const { buyTokensPending, buyTokensError } = useSelector(state => ({
-        buyTokensPending: state.stableYield.buyTokensPending,
-        buyTokensError: state.stableYield.buyTokensError
+        buyTokensPending: state.stableyield.buyTokensPending,
+        buyTokensError: state.stableyield.buyTokensError
     }))
 
     const boundAction = useCallback((data) => {

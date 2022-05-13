@@ -10,7 +10,9 @@ import BondCard from './bondcard';
 import ReferalCard from './referalcard';
 import RewardCard from './rewardcard';
 import { useFetchApproval } from './redux/fetchApproval';
-import { hasApproved } from 'api/appApi';
+import { fetchApyAndRate, useFetchApyAndRate } from './redux/fetchApyAndRate';
+import { useFetchTaxFee } from './redux/fetchTaxFee';
+
 
 const FETCH_INTERVAL_MS = 15 * 1000;
 
@@ -19,7 +21,9 @@ const useStyles = makeStyles(styles);
 export default function StableYield() {
   const { t } = useTranslation();
   const { web3, address, networkId, connected } = useConnectWallet();
-  const { fetchHasApproved, fetchHasApprovedPending, fetchNeedApproval } = useFetchApproval({ web3: web3 })
+  const { fetchHasApproved, fetchHasApprovedPending, fetchNeedApproval } = useFetchApproval({ web3 })
+  const { fetchApyAndRate } = useFetchApyAndRate({ web3 })
+  const { fetchTaxFee } = useFetchTaxFee({web3})
   const classes = useStyles();
 
   useEffect(() => {
@@ -52,6 +56,16 @@ export default function StableYield() {
     getApproval()
   }, [web3]);
 
+  useEffect(() => {
+    const retrieveApyAndRateAndTax = ()=>{
+      if (address && web3) {
+        fetchApyAndRate({web3})
+        fetchTaxFee({web3})
+      }
+    }
+    retrieveApyAndRateAndTax()
+  }, [web3]);
+ 
 
   const chainNameLowercase = getNetworkFriendlyName().toLowerCase();
   const activePoolCount = 0

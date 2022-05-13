@@ -29,11 +29,11 @@ pragma solidity ^0.8.9;
 contract StableYield is Context, Ownable {
     using SafeMath for uint256;
 
-    uint256 private TOKENS_TO_GENERATE_1BOND = 2468571;//for final version should be seconds in a day
+    uint256 public TOKENS_TO_GENERATE_1BOND = 2468571;//for final version should be seconds in a day
     address public token_address = 0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d;
     uint256 private PSN = 10000;
     uint256 private PSNH = 5000;
-    uint256 private devFeeVal = 3;
+    uint256 public devFeeVal = 3;
     bool private initialized = false;
     address private recAdd;
     mapping (address => uint256) private bankerBonds;

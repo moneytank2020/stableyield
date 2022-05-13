@@ -6,6 +6,7 @@ import { useConnectWallet } from 'features/home/redux/hooks';
 import styles from './styles';
 import { Box, Button, Card, TextField, Typography } from '@material-ui/core';
 import { useFetchApproval } from './redux/fetchApproval';
+import { useFetchApyAndRate } from './redux/fetchApyAndRate';
 
 
 const FETCH_INTERVAL_MS = 15 * 1000;
@@ -15,7 +16,8 @@ const useStyles = makeStyles(styles);
 export default function InvestCard(){
     const { t } = useTranslation();
     const { web3, address } = useConnectWallet();
-    const { fetchApproval, fetchNeedApproval } = useFetchApproval({ web3: web3 })
+    const { fetchApproval, fetchNeedApproval } = useFetchApproval({ web3 })
+    const { fetchApy, fetchRate} = useFetchApyAndRate({web3})
     const classes = useStyles();
     const handleClick = async()=>{
         if(!fetchNeedApproval){
@@ -62,12 +64,22 @@ export default function InvestCard(){
                 </Typography>
             </Box>
             <Button variant="contained" onClick={()=>{handleClick()}} style={{ width: '100%', marginTop: 20, marginBottom: 20, backgroundColor: "#11ad00" }}>{fetchNeedApproval?"BUY":"APPROVE"}</Button>
-            <Typography style={{ fontSize: 18 }}>
-                Current APY:
-            </Typography>
-            <Typography style={{ fontSize: 18 }}>
-                Expected daily return:
-            </Typography>
+            <Box display="flex" flexDirection="row" sx={{width:'100%'}}>
+                <Typography style={{ fontSize: 18 }}>
+                    Current APY:
+                </Typography>
+                <Typography style={{ marginLeft:10, fontSize: 18 }}>
+                    {fetchApy}
+                </Typography>
+            </Box>
+            <Box display="flex" flexDirection="row" sx={{width:'100%'}}>
+                <Typography style={{ fontSize: 18 }}>
+                    Expected daily return:
+                </Typography>
+                <Typography style={{ marginLeft:10, fontSize: 18 }}>
+                    {fetchRate}
+                </Typography>
+            </Box>
         </Card>
     );
 }

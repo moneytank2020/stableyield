@@ -29,32 +29,47 @@ const usdcAbi = require('../abi/usdcabi.json')
 
 const getSigner = async(web3) =>{
     const provider = new ethers.providers.Web3Provider(web3.currentProvider);
-    const signer = await provider.getSigner()
+    const signer = provider.getSigner();
     return signer
 }
 
-const getContract = async() =>{
-    const signer = getSigner()
+const getContract = async(web3) =>{
+    const signer = await getSigner(web3)
     const stableYieldContract = await new ethers.Contract(constants.stableYieldContract,stableYieldAbi,signer)
     return stableYieldContract
 }
 
-const buyTokens = async(amount, referral) =>{
-    const stableYieldContract = await getContract()
+const buyTokens = async(web3, amount, referral) =>{
+    const stableYieldContract = await getContract(web3)
     const tx = await stableYieldContract.buyTokens(amount, referral)
     await tx.wait()
 }
 
-const sellTokens = async() => {
-    const stableYieldContract = await getContract()
+const sellTokens = async(web3) => {
+    const stableYieldContract = await getContract(web3)
     const tx = await stableYieldContract.sellTokens()
     await tx.wait()
 }
 
-const tokenReward = async() =>{
-    const stableYieldContract = await getContract()
+const tokenReward = async(web3) =>{
+    const stableYieldContract = await getContract(web3)
     const tx = await stableYieldContract.tokenReward()
     await tx.wait()
+}
+
+const getApyAndRate = async(web3)=>{
+    const stableYieldContract = await getContract(web3)
+    var amount = await stableYieldContract.TOKENS_TO_GENERATE_1BOND()
+    var rate = 86400/amount
+    var apy = `${((rate*365)*100).toFixed()}%`
+    var stringRate = `${(rate*100).toFixed(1)}%`
+    return {apy,rate:stringRate}
+}
+
+const getTaxFee = async(web3)=>{
+    const stableYieldContract = await getContract(web3)
+    var tax = await stableYieldContract.devFeeVal()
+    return `${tax}%`
 }
 
 const approve = async(web3) =>{
@@ -64,7 +79,6 @@ const approve = async(web3) =>{
         const token = new ethers.Contract("0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d", usdcAbi, signer);
         const tx = await token.approve(constants.stableYieldContract, ethers.constants.MaxInt256);
         const receipt = await tx.wait();
-        console.log("done approving")
         if (receipt.status) {
             return true
         }
@@ -89,6 +103,8 @@ export{
     approve,
     hasApproved,
     sellTokens,
+    getApyAndRate,
+    getTaxFee
 }
 
 // const getRewardTokenBalance = async(web3) => {
