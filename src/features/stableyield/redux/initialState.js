@@ -18,7 +18,10 @@
     fetchRate:"0%",
     fetchTaxFeePending:false,
     fetchTaxFeeError:"",
-    fetchTax:"0%"
+    fetchTax:"0%",
+    fetchUserBalancePending: false, 
+    fetchUserBalanceError:"", 
+    fetchUserBalanceValue:"0"
   }
 
   export default initialState;

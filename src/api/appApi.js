@@ -29,9 +29,10 @@ const usdcAbi = require('../abi/usdcabi.json')
 
 const getSigner = async(web3) =>{
     const provider = new ethers.providers.Web3Provider(web3.currentProvider);
-    const signer = provider.getSigner();
+    const signer = await provider.getSigner();
     return signer
 }
+
 
 const getContract = async(web3) =>{
     const signer = await getSigner(web3)
@@ -39,10 +40,16 @@ const getContract = async(web3) =>{
     return stableYieldContract
 }
 
+const getTokenContact = async(web3) =>{
+    const stableYieldContract = await getContract(web3)
+    const tokenAddress = await stableYieldContract.token_address()
+    const tokenContract = new ethers.Contract(tokenAddress, usdcAbi, await getSigner(web3));
+    return tokenContract
+}
+
 const buyTokens = async(web3, amount, referral) =>{
     const stableYieldContract = await getContract(web3)
     const tx = await stableYieldContract.buyTokens(amount, referral)
-    await tx.wait()
 }
 
 const sellTokens = async(web3) => {
@@ -55,6 +62,14 @@ const tokenReward = async(web3) =>{
     const stableYieldContract = await getContract(web3)
     const tx = await stableYieldContract.tokenReward()
     await tx.wait()
+}
+
+const getUserTokenBalance = async(web3) =>{
+    const token = await getTokenContact(web3)
+    const signer = await getSigner(web3)
+    const userAddress = await signer.getAddress();
+    var balance = await token.balanceOf(userAddress)
+    return ethers.utils.formatEther(balance.toString())
 }
 
 const getApyAndRate = async(web3)=>{
@@ -74,9 +89,7 @@ const getTaxFee = async(web3)=>{
 
 const approve = async(web3) =>{
     try {
-        const provider = new ethers.providers.Web3Provider(web3.currentProvider);
-        const signer = provider.getSigner();
-        const token = new ethers.Contract("0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d", usdcAbi, signer);
+        const token = await getTokenContact(web3)
         const tx = await token.approve(constants.stableYieldContract, ethers.constants.MaxInt256);
         const receipt = await tx.wait();
         if (receipt.status) {
@@ -89,10 +102,9 @@ const approve = async(web3) =>{
 }
 
 const hasApproved = async(web3)=>{
-    const provider = new ethers.providers.Web3Provider(web3.currentProvider);
-    const signer = await provider.getSigner()
+    const token = await getTokenContact(web3)
+    const signer = await getSigner(web3)
     const userAddress = await signer.getAddress();
-    const token = new ethers.Contract("0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d", usdcAbi, signer);
     const allowance = await token.allowance(userAddress, constants.stableYieldContract);
     const isAllowed = Number(allowance) !== 0
     return isAllowed
@@ -104,7 +116,8 @@ export{
     hasApproved,
     sellTokens,
     getApyAndRate,
-    getTaxFee
+    getTaxFee,
+    getUserTokenBalance
 }
 
 // const getRewardTokenBalance = async(web3) => {

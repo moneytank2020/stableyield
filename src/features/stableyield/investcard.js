@@ -7,6 +7,7 @@ import styles from './styles';
 import { Box, Button, Card, TextField, Typography } from '@material-ui/core';
 import { useFetchApproval } from './redux/fetchApproval';
 import { useFetchApyAndRate } from './redux/fetchApyAndRate';
+import { useFetchUserBalance } from './redux/fetchUserBalance';
 
 
 const FETCH_INTERVAL_MS = 15 * 1000;
@@ -17,6 +18,7 @@ export default function InvestCard(){
     const { t } = useTranslation();
     const { web3, address } = useConnectWallet();
     const { fetchApproval, fetchNeedApproval } = useFetchApproval({ web3 })
+    const { fetchUserBalanceValue } = useFetchUserBalance({web3})
     const { fetchApy, fetchRate} = useFetchApyAndRate({web3})
     const classes = useStyles();
     const handleClick = async()=>{
@@ -39,9 +41,12 @@ export default function InvestCard(){
                     </Typography>
                 </Grid>
                 <Grid item md={6} xs={6}  display="flex" >
-                    <Box display="flex" justifyContent="flex-end">
+                    <Box display="flex" direction="row" justifyContent="flex-end">
                         <Typography style={{marginBottom: 10,fontSize: 18 }}>
                             Wallet Balance:
+                        </Typography>
+                        <Typography style={{marginLeft: 10,fontSize: 18 }}>
+                            {fetchUserBalanceValue}
                         </Typography>
                     </Box>
                 </Grid>

@@ -2,11 +2,13 @@ import initialState from './initialState'
 import { reducer as fetchApprovalReducer } from './fetchApproval'
 import { reducer as fetchApyAndRateReducer } from './fetchApyAndRate'
 import { reducer as fetchTaxFeeReducer } from './fetchTaxFee'
+import { reducer as fetchUserBalanceReducer } from './fetchUserBalance'
 
 const reducers = [
     fetchApprovalReducer,
     fetchApyAndRateReducer,
-    fetchTaxFeeReducer
+    fetchTaxFeeReducer,
+    fetchUserBalanceReducer
 ]
 
 export default function reducer(state = initialState, action) {
