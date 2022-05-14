@@ -313,6 +313,7 @@ export const getNetworkMulticall = () => {
 };
 
 export const getNetworkConnectors = t => {
+  console.log("window.REACT_APP_NETWORK_ID:",window.REACT_APP_NETWORK_ID)
   switch (window.REACT_APP_NETWORK_ID) {
     case 56:
       return {

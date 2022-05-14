@@ -5,6 +5,7 @@ import { getNetworkAppUrl, getNetworkFriendlyName,getHash } from 'features/helpe
 import { makeStyles } from '@material-ui/core/styles';
 import styles from './styles';
 import { useTranslation } from 'react-i18next';
+import { allNetworks } from 'network';
 
 const useStyles = makeStyles(styles);
 const targetNetworkId = window.REACT_APP_NETWORK_ID;
@@ -21,7 +22,7 @@ export function NetworkConnectNotice({
   const haveConnection = !!web3;
   const haveAddress = !!address;
   const isCorrectNetwork = networkId === targetNetworkId;
-  const isSupportedNetwork = networkId && networkId in networkSettings;
+  const isSupportedNetwork = window.REACT_APP_NETWORK_ID && window.REACT_APP_NETWORK_ID in networkSettings;
   const targetNetworkFriendlyName = getNetworkFriendlyName();
   const classes = useStyles();
   let notice = null;
@@ -49,6 +50,19 @@ export function NetworkConnectNotice({
     window.location.reload();
   };
 
+
+  const generateNetworkFrienlyString = ()=>{
+    let networks = ""
+    allNetworks.forEach((n,index)=>{
+        networks += n.name
+        if(index >= 0 && index < allNetworks.length-2){
+          networks += ", "
+        }else if(index == allNetworks.length-2){
+          networks += " & "
+        }
+    })
+    return networks
+  }
   const supportedNetwork = useMemo(() => {
     return isSupportedNetwork
       ? {
@@ -59,28 +73,19 @@ export function NetworkConnectNotice({
       : null;
   }, [isSupportedNetwork, networkId]);
 
-  if (!haveConnection) {
-    notice = (
-      <>
-        <div className={classes.message}>
-          {t('Network-ConnectionRequired', { network: targetNetworkFriendlyName })}
-        </div>
-        <div className={classes.actions}>
-          <Button onClick={connectWallet} className={classes.button}>
-            {t('Network-ConnectWallet')}
-          </Button>
-        </div>
-      </>
-    );
-  } else if (!isCorrectNetwork) {
-    console.log("wrong network")
-    if(getHash(networkId) != undefined){
-      networkRedirect(supportedNetwork.url)
-    }else{
+  if (!isSupportedNetwork) {
+    console.log("netwokr not supported")
+    console.log("networkId:", window.REACT_APP_NETWORK_ID)
+    console.log("networkSettings:", networkSettings)
+    // if(getHash(networkId) != undefined){
+    //   networkRedirect(supportedNetwork.url)
+    // }
+    // else{
       notice = (
         <>
           <div className={classes.message}>
-            {t('Network-Supports', { network: targetNetworkFriendlyName })}{' '}
+            {console.log(generateNetworkFrienlyString())}
+            {t('Network-Supports', { network: generateNetworkFrienlyString() })}{" "}
             {isSupportedNetwork
               ? t('Network-ConnectedTo', { network: supportedNetwork.name })
               : t('Network-ConnectedUnsupported')}
@@ -105,7 +110,21 @@ export function NetworkConnectNotice({
           {networkSetupError ? <div className={classes.error}>{networkSetupError}</div> : ''}
         </>
       );
-    }
+    // }
+  }
+  else if (!haveConnection) {
+    notice = (
+      <>
+        <div className={classes.message}>
+          {t('Network-ConnectionRequired', { network: targetNetworkFriendlyName })}
+        </div>
+        <div className={classes.actions}>
+          <Button onClick={connectWallet} className={classes.button}>
+            {t('Network-ConnectWallet')}
+          </Button>
+        </div>
+      </>
+    );
   } else if (!haveAddress) {
     notice = (
       <>

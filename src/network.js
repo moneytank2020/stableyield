@@ -7,7 +7,7 @@ export const allNetworks = [
     hash: '/fantom',
   },
   {
-    name: 'Binance',
+    name: 'Localhost',
     asset: 'BNB',
     id: 31337,
     hash: '/localhost',
@@ -26,13 +26,7 @@ export const allNetworks = [
   },
 ];
 
-const network = allNetworks.find(n => window.location.hash.startsWith('#' + n.hash));
+// const network = allNetworks.find(n => n.id == parseInt(window.ethereum.networkVersion));
 
-if (!network) {
-  window.location.hash = allNetworks[0].hash;
-  window.location.reload();
-} else {
-  window.REACT_APP_NETWORK_ID = network.id;
-}
-
-export default network;
+// window.REACT_APP_NETWORK_ID = network.id;
+// export default network;

@@ -29,8 +29,8 @@ const NetworksModal = memo(function NetworksModal({ isOpen, handleClose, current
       if (network.id === currentNetwork.id) {
         handleClose();
       } else {
-        window.location.hash = network.hash;
-        window.location.reload();
+        // window.location.hash = network.hash;
+        // window.location.reload();
       }
     },
     [currentNetwork, handleClose]

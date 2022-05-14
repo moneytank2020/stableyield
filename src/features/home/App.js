@@ -13,6 +13,8 @@ import { useConnectWallet, useDisconnectWallet } from './redux/hooks';
 import useNightMode from './hooks/useNightMode';
 import createThemeMode from './jss/appTheme';
 import { useLocation } from 'react-router';
+import { networkSettings} from 'common/networkSetup';
+import { LaptopWindows } from '@material-ui/icons';
 
 const themes = { dark: null, dark: null };
 const getTheme = mode => {
@@ -42,8 +44,11 @@ export default function App({ children }) {
   }, [theme]);
   const classes = useStyles();
 
+  const isSupportedNetwork = networkId && networkId in networkSettings;
   useEffect(() => {
-    setModal(createWeb3Modal(t));
+    if(isSupportedNetwork){
+      setModal(createWeb3Modal(t));
+    }
   }, [setModal, t]);
 
   useEffect(() => {
@@ -59,6 +64,33 @@ export default function App({ children }) {
   const disconnectWalletCallback = useCallback(() => {
     disconnectWallet(web3, web3Modal);
   }, [web3, web3Modal, disconnectWallet]);
+
+  useEffect(() => {
+    if (window.ethereum) {
+      const eth = async()=>{
+        await window.ethereum
+        console.log("eht test:",window.ethereum)
+        console.log("eht testchainId:",window.ethereum.chainId)
+        console.log("ideth:",parseInt(window.ethereum.chainId,16))
+      }
+      eth()
+      if(window.ethereum.chainId == null){
+        window.location.reload();
+      }
+      window.REACT_APP_NETWORK_ID = parseInt(window.ethereum.networkVersion);
+      
+      window.ethereum.on("connect", ()=>{
+        console.log("Connected")
+        console.log(parseInt(window.ethereum.chainId,16))
+      })
+      window.ethereum.on("chainChanged", () => {
+        window.location.reload();
+      });
+      window.ethereum.on("accountsChanged", () => {
+        window.location.reload();
+      });
+    }
+  });
 
   return (
     <StylesProvider injectFirst>

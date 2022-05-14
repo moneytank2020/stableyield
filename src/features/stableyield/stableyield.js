@@ -34,6 +34,13 @@ export default function StableYield() {
   });
 
 
+  useEffect(()=>{
+    const fetchNetworkId = () =>{
+      console.log("id:",window.ethereum.networkId)
+    }
+    fetchNetworkId()
+  },[])
+
   useEffect(() => {
     const fetch = () => {
       if (address && web3) {
@@ -78,8 +85,6 @@ export default function StableYield() {
     getUserBalance()
   }, [web3]);
 
-  const chainNameLowercase = getNetworkFriendlyName().toLowerCase();
-  const activePoolCount = 0
   return (
     <Grid container className={classes.container} direction="column">
       {web3 ? (
