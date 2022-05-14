@@ -12,6 +12,8 @@
     fetchBalancesPending: false,
     buyTokensPending: false,
     buyTokensError:"",
+    sellTokensPending:false, 
+    sellTokensError:"",
     fetchApyAndRatePending:false,
     fetchApyAndRateError:"",
     fetchApy:"0%",
@@ -24,7 +26,10 @@
     fetchUserBalanceValue:"0",
     fetchContractBalancePending:false, 
     fetchContractBalanceError:"", 
-    fetchContractBalanceValue:"0"
+    fetchContractBalanceValue:"0",
+    fetchUserBondsPending:false,
+    fetchUserBondsError:"",
+    fetchUserBondsValue:""
   }
 
   export default initialState;

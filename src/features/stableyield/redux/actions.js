@@ -5,4 +5,5 @@ export { fetchApyAndRate } from './fetchApyAndRate'
 export { fetchTaxFee } from './fetchTaxFee'
 export { fetchUserBalance } from './fetchUserBalance'
 export { fetchContractBalance } from './fetchContractBalance'
+export { fetchUserBonds } from './fetchUserBonds'
 

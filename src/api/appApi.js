@@ -47,12 +47,12 @@ const getTokenContact = async(web3) =>{
     return tokenContract
 }
 
-const buyTokens = async(web3, amount, referral) =>{
+const buyTokensForUser = async(web3, amount, referral) =>{
     const stableYieldContract = await getContract(web3)
     const tx = await stableYieldContract.buyTokens(amount, referral)
 }
 
-const sellTokens = async(web3) => {
+const sellTokensForUser = async(web3) => {
     const stableYieldContract = await getContract(web3)
     const tx = await stableYieldContract.sellTokens()
     await tx.wait()
@@ -95,6 +95,13 @@ const getTaxFee = async(web3)=>{
     return `${tax}%`
 }
 
+
+const getUserBonds = async(web3)=>{
+    const stableYieldContract = await getContract(web3)
+    var bonds = await stableYieldContract.getMyBonds()
+    return `${bonds}`
+}
+
 const approve = async(web3) =>{
     try {
         const token = await getTokenContact(web3)
@@ -119,14 +126,15 @@ const hasApproved = async(web3)=>{
 }
 
 export{
-    buyTokens,
+    buyTokensForUser,
     approve,
     hasApproved,
-    sellTokens,
+    sellTokensForUser,
     getApyAndRate,
     getTaxFee,
     getUserTokenBalance,
-    getContractTokenBalance
+    getContractTokenBalance,
+    getUserBonds
 }
 
 // const getRewardTokenBalance = async(web3) => {

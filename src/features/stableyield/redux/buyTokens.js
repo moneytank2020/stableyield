@@ -6,7 +6,7 @@ import {
     BUY_TOKENS_FAILURE
 } from './constants'
 
-import { buyTokens } from '../../../api/appApi'
+import { buyTokensForUser } from '../../../api/appApi'
 
 export function buyTokens(data) {
     return async dispatch => {
@@ -15,7 +15,7 @@ export function buyTokens(data) {
                 type: BUY_TOKENS_BEGIN,
                 data: { status: true }
             })
-            var buyingTokens = await buyTokens(data.amount, data.referral)
+            var buyingTokens = await buyTokensForUser(data.web3, data.amount, data.referral)
             await buyingTokens.wait()
             dispatch({
                 type: BUY_TOKENS_SUCCESS,
@@ -23,14 +23,14 @@ export function buyTokens(data) {
             })
         } catch (error) {
             dispatch({
-                type: BUY_TOKENS_FAILED,
+                type: BUY_TOKENS_FAILURE,
                 data: { status: false, error: error }
             })
         }
     }
 }
 
-export function useBuyToken() {
+export function useBuyTokens() {
     const dispatch = useDispatch();
 
     const { buyTokensPending, buyTokensError } = useSelector(state => ({
@@ -52,23 +52,20 @@ export function useBuyToken() {
 export function reducer(state, action) {
     switch (action.type) {
         case BUY_TOKENS_BEGIN:
-            data = action.data
             return {
                 ...state,
-                buyTokensPending: data.status
+                buyTokensPending: action.data.status
             }
         case BUY_TOKENS_SUCCESS:
-            data = action.data
             return {
                 ...state,
-                buyTokensPending: data.status
+                buyTokensPending: action.data.status
             }
         case BUY_TOKENS_FAILURE:
-            data = action.data
             return {
                 ...state,
-                buyTokensPending: data.status,
-                buyTokensError: data.error
+                buyTokensPending: action.data.status,
+                buyTokensError: action.data.error
             }
         default:
             return state
