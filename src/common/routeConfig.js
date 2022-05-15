@@ -2,10 +2,10 @@ import { App, HomePage } from '../features/home';
 
 const routes = [
   {
-    path: '/:chain',
+    path: '/',
     component: App,
     childRoutes: [
-      { path: '/:chain', component: HomePage, isIndex: true },
+      { path: '/', component: HomePage, isIndex: true },
     ],
   },
 ];

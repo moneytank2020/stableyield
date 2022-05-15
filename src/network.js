@@ -13,12 +13,6 @@ export const allNetworks = [
     hash: '/localhost',
   },
   {
-    name: 'Ethereum',
-    asset: 'ETH',
-    id: 1,
-    hash: '/eth',
-  },
-  {
     name: 'Binance',
     asset: 'BNB',
     id: 56,
@@ -26,11 +20,10 @@ export const allNetworks = [
   },
 ];
 
-const network = allNetworks.find(n => window.location.hash.startsWith('#' + n.hash));
-
+// const network = allNetworks.find(n => window.location.hash.startsWith('#' + n.hash));
+const network = allNetworks.find(n => parseInt(window.ethereum.chainId) == n.id);
 if (!network) {
-  window.location.hash = allNetworks[0].hash;
-  window.location.reload();
+  window.REACT_APP_NETWORK_ID = parseInt(window.ethereum.chainId)
 } else {
   window.REACT_APP_NETWORK_ID = network.id;
 }

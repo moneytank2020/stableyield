@@ -78,7 +78,7 @@ export default function StableYield() {
     getUserBalance()
   }, [web3]);
 
-  const chainNameLowercase = getNetworkFriendlyName().toLowerCase();
+  // const chainNameLowercase = getNetworkFriendlyName().toLowerCase();
   const activePoolCount = 0
   return (
     <Grid container className={classes.container} direction="column">

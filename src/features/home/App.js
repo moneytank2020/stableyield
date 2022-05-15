@@ -13,6 +13,7 @@ import { useConnectWallet, useDisconnectWallet } from './redux/hooks';
 import useNightMode from './hooks/useNightMode';
 import createThemeMode from './jss/appTheme';
 import { useLocation } from 'react-router';
+import { allNetworks } from 'network.js';
 
 const themes = { dark: null, dark: null };
 const getTheme = mode => {
@@ -43,7 +44,17 @@ export default function App({ children }) {
   const classes = useStyles();
 
   useEffect(() => {
-    setModal(createWeb3Modal(t));
+    // console.log("network id:",networkId)
+    // let network = allNetworks.find(n=> n.id == networkId)
+    if(allNetworks.find(n=> n.id == networkId) != undefined){
+      setModal(createWeb3Modal(t));
+    }else{
+      console.log("testing metamask")
+      window.ethereum.on('chainChanged', (chainId) => {
+        console.log("testing:",chainId)
+        setModal(createWeb3Modal(parseInt(chainId,16)));
+      });
+    }
   }, [setModal, t]);
 
   useEffect(() => {
@@ -59,7 +70,6 @@ export default function App({ children }) {
   const disconnectWalletCallback = useCallback(() => {
     disconnectWallet(web3, web3Modal);
   }, [web3, web3Modal, disconnectWallet]);
-
   return (
     <StylesProvider injectFirst>
       <ThemeProvider theme={theme}>
