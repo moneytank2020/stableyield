@@ -72,9 +72,14 @@ const getUserTokenBalance = async(web3) =>{
     return ethers.utils.formatEther(balance.toString())
 }
 
+const getUserTokensMinusFees = async(web3) => {
+    const contract = await getContract(web3)
+    const userContractTokenBalance = await contract.calcaulteSellPriceMinusFee()
+    return ethers.utils.formatEther(userContractTokenBalance)
+}
+
 const getContractTokenBalance = async(web3) =>{
     const contract = await getContract(web3)
-    const signer = await getSigner(web3)
     var balance = await contract.getBalance()
     return ethers.utils.formatEther(balance.toString())
 }
