@@ -8,6 +8,7 @@ import { Box, Button, Card, TextField, Typography } from '@material-ui/core';
 import { useFetchApproval } from './redux/fetchApproval';
 import { useFetchApyAndRate } from './redux/fetchApyAndRate';
 import { useFetchUserBalance } from './redux/fetchUserBalance';
+import { useFetchBondsForTokens } from './redux/fetchBondsForToken';
 
 
 const FETCH_INTERVAL_MS = 15 * 1000;
@@ -15,9 +16,12 @@ const FETCH_INTERVAL_MS = 15 * 1000;
 const useStyles = makeStyles(styles);
 
 export default function InvestCard(){
+ 
     const { t } = useTranslation();
     const { web3, address } = useConnectWallet();
+
     const { fetchApproval, fetchNeedApproval } = useFetchApproval({ web3 })
+    const { fetchBondsForTokens, fetchBondsForTokenPending, fetchBondsForTokensValue } = useFetchBondsForTokens({ data })
     const { fetchUserBalanceValue } = useFetchUserBalance({web3})
     const { fetchApy, fetchRate} = useFetchApyAndRate({web3})
     const classes = useStyles();
@@ -27,6 +31,13 @@ export default function InvestCard(){
         }else{
 
         }
+    }
+
+    var data = {"amount":"0","web3":web3}
+    
+    const handleAmountChange = async(amount) =>{
+        data["amount"] = amount
+        await fetchBondsForTokens(data)
     }
 
     return (
@@ -52,14 +63,14 @@ export default function InvestCard(){
                 </Grid>
             </Grid>
             <Box display="flex" flexDirection="row" borderTop={1} borderBottom={1} borderLeft={1} borderRight={1} sx={{width:'100%', padding:10}}>
-                <TextField style={{ fontSize: 18, width: '100%' }}  InputProps={{ disableUnderline: true }} id="outlined-basic"/>
+                <TextField style={{ fontSize: 18, width: '100%' }}  InputProps={{ disableUnderline: true }} id="outlined-basic" onChange={(event)=>{handleAmountChange(event.target.value)}}/>
                 <Typography style={{ fontSize: 18, paddingTop:"0.5%" }}>
                     USDC
                 </Typography>
             </Box>
             <Grid style={{ marginTop: 10 }} item md={6} xs={6}>
                 <Typography style={{ marginBottom: 10, fontSize: 18 }}>
-                    You receive:
+                    {`You receive: ${fetchBondsForTokensValue}`}
                 </Typography>
             </Grid>
             <Box display="flex" flexDirection="row" borderTop={1} borderBottom={1} borderLeft={1} borderRight={1} sx={{width:'100%', padding:10}}>

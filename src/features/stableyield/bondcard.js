@@ -33,7 +33,7 @@ export default function BondCard(
 
 
     return (
-        <Card style={{ padding: 20 }}>
+        <Card style={{ padding: 20, borderRadius:10 }}>
             <Grid container direction="row">
                 <Grid item md={6} xs={6}>
                     <Typography style={{ marginBottom: 10, fontSize: 28 }}>

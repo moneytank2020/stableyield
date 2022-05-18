@@ -5,6 +5,7 @@ async function main(){
     let StableYieldContract = await ethers.getContractFactory("StableYield")
     let stableYield = await StableYieldContract.deploy()
     await stableYield.deployed()
+    await stableYield.provideMarket()
     console.log("procces complete")
     console.log(`{\n "stableYieldContract":"${stableYield.address}"\n}`)
     const content = `{\n "stableYieldContract":"${stableYield.address}"\n}`

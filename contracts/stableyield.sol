@@ -100,16 +100,22 @@ contract StableYield is Context, Ownable {
     function calculateTrade(uint256 rt,uint256 rs, uint256 bs) private view returns(uint256) {
         return SafeMath.div(SafeMath.mul(PSN,bs),SafeMath.add(PSNH,SafeMath.div(SafeMath.add(SafeMath.mul(PSN,rs),SafeMath.mul(PSNH,rt)),rt)));
     }
-    
+
     function calculateTokenSell(uint256 tokens) public view returns(uint256) {
         return calculateTrade(tokens,marketTokens,getBalance());
     }
     
-    function calcaulteSellPriceMinusFee() public view returns(uint256){
+    function calculateSellPriceMinusFee() public view returns(uint256){
         uint256 userTokens = getMyTokens(msg.sender);
         uint256 tokenValue = calculateTokenSell(userTokens);
         uint256 fee = devFee(tokenValue);
         return SafeMath.sub(tokenValue,fee);
+    }
+
+    function calculateBuyMinusFee(uint256 amount) public view returns (uint256){
+        uint256 tokensBought = calculateTrade(amount,SafeMath.sub(token.balanceOf(address(this)),amount),marketTokens);
+        tokensBought = SafeMath.sub(tokensBought,devFee(tokensBought));
+        return tokensBought;
     }
 
     function calculateTokenBuy(uint256 eth,uint256 contractBalance) public view returns(uint256) {

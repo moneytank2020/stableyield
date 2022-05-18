@@ -29,7 +29,10 @@
     fetchContractBalanceValue:"0",
     fetchUserBondsPending:false,
     fetchUserBondsError:"",
-    fetchUserBondsValue:""
+    fetchUserBondsValue:"",
+    fetchBondsForTokensPending:false,
+    fetchBondsForTokensError:"",
+    fetchBondsForTokensValue:"0"
   }
 
   export default initialState;

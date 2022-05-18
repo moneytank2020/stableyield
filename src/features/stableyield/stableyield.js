@@ -13,6 +13,7 @@ import { useFetchApproval } from './redux/fetchApproval';
 import { useFetchApyAndRate } from './redux/fetchApyAndRate';
 import { useFetchTaxFee } from './redux/fetchTaxFee';
 import { useFetchUserBalance } from './redux/fetchUserBalance';
+import { useFetchBondsForTokens } from './redux/fetchBondsForToken';
 
 
 const FETCH_INTERVAL_MS = 15 * 1000;
@@ -22,6 +23,7 @@ const useStyles = makeStyles(styles);
 export default function StableYield() {
   const { t } = useTranslation();
   const { web3, address, networkId, connected } = useConnectWallet();
+  const { fetchBondsForTokenPending, fetchBondsForTokensValue } = useFetchBondsForTokens({ web3 })
   const { fetchHasApproved, fetchHasApprovedPending, fetchNeedApproval } = useFetchApproval({ web3 })
   const { fetchApyAndRate } = useFetchApyAndRate({ web3 })
   const { fetchTaxFee } = useFetchTaxFee({web3})
@@ -86,7 +88,7 @@ export default function StableYield() {
         <Grid item>
           <Grid container direction="row" spacing={2}>
             <Grid item xs={12} md={6}>
-              <Grid container direction="column" spacing={2}>
+              <Grid container direction="column">
                 <Grid item>
                   <InvestCard hasApproved={fetchNeedApproval} />
                 </Grid>

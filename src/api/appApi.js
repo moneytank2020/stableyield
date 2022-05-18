@@ -74,8 +74,15 @@ const getUserTokenBalance = async(web3) =>{
 
 const getUserTokensMinusFees = async(web3) => {
     const contract = await getContract(web3)
-    const userContractTokenBalance = await contract.calcaulteSellPriceMinusFee()
+    const userContractTokenBalance = await contract.calculateSellPriceMinusFee()
     return ethers.utils.formatEther(userContractTokenBalance)
+}
+
+const getBondsForTokens = async(web3, amount) =>{
+    const contract = await getContract(web3)
+    const bondsForTokens = await contract.calculateBuyMinusFee(ethers.utils.parseEther(amount))
+    console.log("testing:",Number(bondsForTokens))
+    return Number(bondsForTokens)
 }
 
 const getContractTokenBalance = async(web3) =>{
@@ -139,7 +146,9 @@ export{
     getTaxFee,
     getUserTokenBalance,
     getContractTokenBalance,
-    getUserBonds
+    getUserBonds,
+    getBondsForTokens,
+    getUserTokensMinusFees
 }
 
 // const getRewardTokenBalance = async(web3) => {
