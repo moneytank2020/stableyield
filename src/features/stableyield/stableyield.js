@@ -33,8 +33,8 @@ export default function StableYield() {
   const { fetchHasApproved, fetchHasApprovedPending, fetchNeedApproval } = useFetchApproval({ web3 })
   const { fetchContractBalance } = useFetchContractBalance({ web3 })
   const { fetchApyAndRate } = useFetchApyAndRate({ web3 })
-  const { fetchTaxFee } = useFetchTaxFee({web3})
-  const { fetchUserBalance } = useFetchUserBalance({web3})
+  const { fetchTaxFee } = useFetchTaxFee({ web3 })
+  const { fetchUserBalance } = useFetchUserBalance({ web3 })
   const { fetchUserBonds } = useFetchUserBonds({ web3 })
   const { buyTokensPending } = useBuyTokens({ web3 })
   const { sellTokensPending } = useSellTokens({ web3 })
@@ -46,14 +46,16 @@ export default function StableYield() {
     // return () => clearInterval(id);
   });
 
-  useEffect(()=>{
-    window.ethereum.on('accountsChanged', function (accounts) {
-      if (address && web3) {
-        fetchUserBalance({ web3 })
-        fetchUserBonds({ web3 })
-      }
-    })
-  })
+  useEffect(() => {
+    if (window.ethereum != null) {
+      window.ethereum.on('accountsChanged', function (accounts) {
+        if (address && web3) {
+          fetchUserBalance({ web3 })
+          fetchUserBonds({ web3 })
+        }
+      })
+    }
+  }, [window.ethereum])
 
   useEffect(() => {
     const fetch = () => {
@@ -67,11 +69,11 @@ export default function StableYield() {
 
     // Adding tokens and pools to this dep list, causes an endless loop, DDoSing the api
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchHasApprovedPending,fetchNeedApproval]);
+  }, [fetchHasApprovedPending, fetchNeedApproval]);
 
 
   useEffect(() => {
-    const getApproval = ()=>{
+    const getApproval = () => {
       if (address && web3) {
         fetchHasApproved({ web3 })
       }
@@ -80,18 +82,18 @@ export default function StableYield() {
   }, [web3]);
 
   useEffect(() => {
-    const retrieveApyAndRateAndTax = ()=>{
+    const retrieveApyAndRateAndTax = () => {
       if (address && web3) {
-        fetchApyAndRate({web3})
-        fetchTaxFee({web3})
+        fetchApyAndRate({ web3 })
+        fetchTaxFee({ web3 })
       }
     }
     retrieveApyAndRateAndTax()
-  }, [web3, ]);
- 
+  }, [web3,]);
+
 
   useEffect(() => {
-    const getUserBalance = ()=>{
+    const getUserBalance = () => {
       if (address && web3 && !buyTokensPending && !sellTokensPending) {
         fetchUserBalance({ web3 })
         fetchContractBalance({ web3 })
@@ -116,10 +118,10 @@ export default function StableYield() {
             <Grid item xs={12} md={6}>
               <Grid container direction="column">
                 <Grid item>
-                  <BuyCard/>
+                  <BuyCard />
                 </Grid>
                 <Grid item>
-                  <BondCard/>
+                  <BondCard />
                 </Grid>
               </Grid>
             </Grid>

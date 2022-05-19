@@ -42,9 +42,9 @@ const HeaderLinks = ({
 
   return (
     <List className={classes.list + ' ' + classes.mlAuto}>
-      <ListItem className={classes.listItem}>
+      {/* <ListItem className={classes.listItem}>
         <LanguageDropdown navLinkClass={classes.navLink} />
-      </ListItem>
+      </ListItem> */}
       <ListItem className={classes.listItem}>
         <Button
           disableElevation
