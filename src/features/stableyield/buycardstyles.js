@@ -44,6 +44,11 @@ const styles = theme => ({
     borderRadius: 100,
     fontWeight: 700,
     backgroundColor: theme.palette.text.primary
+  },
+  divider: {
+    margin: '10px 0',
+    height: '2px',
+    backgroundColor:grey[200]
   }
 });
 

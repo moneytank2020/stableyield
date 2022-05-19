@@ -7,7 +7,6 @@ import styles from './styles';
 import { getNetworkFriendlyName } from '../helpers/getNetworkData';
 import BondCard from './bondcard';
 import ReferalCard from './referralcard';
-import RewardCard from './rewardcard';
 import { useFetchApproval } from './redux/fetchApproval';
 import { useFetchApyAndRate } from './redux/fetchApyAndRate';
 import { useFetchTaxFee } from './redux/fetchTaxFee';
@@ -120,9 +119,9 @@ export default function StableYield() {
                 <Grid item>
                   <BuyCard />
                 </Grid>
-                <Grid item>
+                {/* <Grid item>
                   <BondCard />
-                </Grid>
+                </Grid> */}
               </Grid>
             </Grid>
             <Grid item xs={12} md={6}>

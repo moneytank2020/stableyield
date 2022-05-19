@@ -4,14 +4,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import { useConnectWallet } from 'features/home/redux/hooks';
 import styles from './buycardstyles';
-import { Box, Button, Card, TextField, Typography } from '@material-ui/core';
+import { Box, Button, Card, Divider, TextField, Typography } from '@material-ui/core';
 import { useFetchApproval } from './redux/fetchApproval';
 import { useFetchUserBalance } from './redux/fetchUserBalance';
 import { useFetchBondsForTokens } from './redux/fetchBondsForToken';
 import { useFetchContractBalance } from './redux/fetchContractBalance';
 import { useFetchUserBonds } from './redux/fetchUserBonds';
 import { useBuyTokens } from './redux/buyTokens';
-
+import { useFetchUserTokenReward } from './redux/fetchUserTokenRewards';
+import { useReInvestBonds } from './redux/reinvestBonds';
+import { useSellTokens } from './redux/sellTokens';
 
 const FETCH_INTERVAL_MS = 15 * 1000;
 
@@ -28,13 +30,15 @@ export default function BuyCard() {
         web3:web3,
         referral:queryParams.get('ref')
     })
-
+    const { fetchUserTokenRewardValue } = useFetchUserTokenReward({ web3 })
     const { fetchApproval, isApproved, fetchApprovalPending, fetchHasApprovedPending } = useFetchApproval({ web3 })
     const { fetchBondsForTokens, fetchBondsForTokensValue } = useFetchBondsForTokens({ buySettings })
     const { fetchUserBalanceValue } = useFetchUserBalance({ web3 })
     const { fetchContractBalanceValue } = useFetchContractBalance({ web3 })
     const { fetchUserBondsValue } = useFetchUserBonds({ web3 })
     const { buyTokens } = useBuyTokens({ web3 })
+    const { reInvestBonds } = useReInvestBonds({ web3 })
+    const { sellTokens } = useSellTokens({web3})
     const classes = useStyles();
 
     
@@ -43,6 +47,21 @@ export default function BuyCard() {
             await fetchApproval({ web3 })
         } else {
             await buyTokens(buySettings)
+        }
+    }
+    const handleRedeemClick = async () => {
+        if (!isApproved) {
+            await fetchApproval({ web3 })
+        } else {
+            await sellTokens({ web3 })
+        }
+    }
+
+    const handleReInvestClick = async () => {
+        if (!isApproved) {
+            await fetchApproval({ web3 })
+        } else {
+            await reInvestBonds({ web3, referral })
         }
     }
 
@@ -127,6 +146,29 @@ export default function BuyCard() {
                 </Typography>
             </Grid>
             <Button variant="contained" onClick={() => { handleClick() }} disabled={fetchApprovalPending || fetchHasApprovedPending? true : false } className={isApproved ? classes.button : classes.approveButton}>{isApproved ? "BUY" : "APPROVE"}</Button>
+            <Divider className={classes.divider} />
+            <Grid container direction="row">
+                <Grid item md={6} xs={6}>
+                    <Typography className={classes.text}>
+                        Your Rewards
+                    </Typography>
+                </Grid>
+                <Grid item md={6} xs={6} display="flex" >
+                    <Box display="flex" justifyContent="flex-end">
+                        <Typography className={classes.text} style={{ marginTop: 7 }}>
+                            {`${fetchUserTokenRewardValue} USDC`}
+                        </Typography>
+                    </Box>
+                </Grid>
+            </Grid>
+            <Grid container direction="row" spacing={2}>
+                <Grid item md={6} xs={6}>
+                    <Button variant="contained" onClick={() => { handleReInvestClick() }} className={isApproved ? classes.button : classes.approveButton}>{isApproved ? "Reinvest" : "Approve"}</Button>
+                </Grid>
+                <Grid item md={6} xs={6} display="flex" >
+                    <Button variant="contained" onClick={() => { handleRedeemClick() }} className={isApproved ? classes.button : classes.approveButton}>{isApproved ? "Redeem" : "Approve"}</Button>
+                </Grid>
+            </Grid>
         </Card>
     );
 }
