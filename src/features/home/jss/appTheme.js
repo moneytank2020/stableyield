@@ -1,3 +1,4 @@
+import { blue } from '@material-ui/core/colors';
 import { createTheme } from '@material-ui/core/styles';
 
 const createThemeMode = isNightMode =>
@@ -5,8 +6,8 @@ const createThemeMode = isNightMode =>
     palette: {
       type: isNightMode ? 'dark' : 'light',
       background: {
-        default: isNightMode ? '#121127' : '#121127',
-        paper: isNightMode ? '#606077' : '#fff',
+        default: isNightMode ? '#FFFFFFFF' : '#FFFFFFFF',
+        paper: isNightMode ? '#FFFFFFFF' : '#FFFFFFFF',
         primary: isNightMode ? '#1d1930' : '#1d1930',
         secondary: isNightMode ? '#3B3A4D' : '#1d1930',
         extra: isNightMode ? '#1d1930' : '#1d1930',
@@ -24,10 +25,13 @@ const createThemeMode = isNightMode =>
         main: isNightMode ? '#fff' : '#1d1930',
       },
       text: {
-        primary: isNightMode ? '#fff' : '#000',
+        primary: isNightMode ? `#075be8` : `#075be8`,
         secondary: isNightMode ? '#B0B0DD' : '#00000066',
         flipped: isNightMode ? '#000' : '#fff',
       },
+      MuiButton:{
+        primary: isNightMode ? `#075be8` : `#075be8`,
+      }
     },
     overrides: {
       MuiButton: {

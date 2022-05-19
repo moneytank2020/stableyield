@@ -21,7 +21,6 @@ export function fetchContractBalance(data) {
                 data: { status: false, balance: balance}
             })
         } catch (error) {
-            console.log("error:",error)
             dispatch({
                 type: FETCH_CONTRACT_BALANCE_FAILURE,
                 data: { status: false, error: error }

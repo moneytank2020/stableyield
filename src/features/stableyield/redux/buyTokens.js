@@ -15,13 +15,16 @@ export function buyTokens(data) {
                 type: BUY_TOKENS_BEGIN,
                 data: { status: true }
             })
+            console.log("buying")
             var buyingTokens = await buyTokensForUser(data.web3, data.amount, data.referral)
+           
             await buyingTokens.wait()
             dispatch({
                 type: BUY_TOKENS_SUCCESS,
                 data: { status: false }
             })
         } catch (error) {
+            console.log("error:",error)
             dispatch({
                 type: BUY_TOKENS_FAILURE,
                 data: { status: false, error: error }

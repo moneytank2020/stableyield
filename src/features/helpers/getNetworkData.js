@@ -1186,7 +1186,7 @@ export const getNetworkAppUrl = (networkId = window.REACT_APP_NETWORK_ID) =>
   '//' +
   window.location.host +
   window.location.pathname +
-  '#' +
+  '/' +
   allNetworks.find(n => n.id === networkId)?.hash;
 
 export const getHash = (networkId = window.REACT_APP_NETWORK_ID) =>

@@ -4,7 +4,7 @@
     fetchApysDone: false,
     fetchApysPending: false,
     fetchApprovalPending:false,
-    fetchNeedApproval:false,
+    isApproved:false,
     fetchHasApprovedPending:false,
     fetchHasApprovedError:false,
     fetchAprovalError:"",
@@ -29,10 +29,13 @@
     fetchContractBalanceValue:"0",
     fetchUserBondsPending:false,
     fetchUserBondsError:"",
-    fetchUserBondsValue:"",
+    fetchUserBondsValue:"0.0",
     fetchBondsForTokensPending:false,
     fetchBondsForTokensError:"",
-    fetchBondsForTokensValue:"0"
+    fetchBondsForTokensValue:"0.0",
+    fetchUserTokenRewardPending:false, 
+    fetchUserTokenRewardError:"", 
+    fetchUserTokenRewardValue:"0",
   }
 
   export default initialState;

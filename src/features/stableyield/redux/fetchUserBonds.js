@@ -21,7 +21,6 @@ export function fetchUserBonds(data) {
                 data: { status: false, userBonds: userBonds}
             })
         } catch (error) {
-            console.log("error:",error)
             dispatch({
                 type: FETCH_USER_BONDS_FAILURE,
                 data: { status: false, error: error }
@@ -62,7 +61,7 @@ export function reducer(state, action) {
             return {
                 ...state,
                 fetchUserBondsPending: action.data.status,
-                fetchUserBondsValue:action.data.taxFee,
+                fetchUserBondsValue:action.data.userBonds,
             }
         case FETCH_USER_BONDS_FAILURE:
             return {

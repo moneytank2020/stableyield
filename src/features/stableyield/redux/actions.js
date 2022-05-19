@@ -7,4 +7,6 @@ export { fetchUserBalance } from './fetchUserBalance'
 export { fetchContractBalance } from './fetchContractBalance'
 export { fetchUserBonds } from './fetchUserBonds'
 export { fetchBondsForTokens } from './fetchBondsForToken'
+export { reInvestBonds } from './reinvestBonds'
+export { fetchUserTokenReward } from './fetchUserTokenRewards'
 

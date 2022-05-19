@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
+
 import history from './history';
 import homeReducer from 'features/home/redux/reducer';
 import commonReducer from 'features/common/redux/reducer';

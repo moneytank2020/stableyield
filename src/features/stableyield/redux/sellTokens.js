@@ -15,13 +15,13 @@ export function sellTokens(data) {
                 type: SELL_TOKENS_BEGIN,
                 data: { status: true }
             })
-            var sellingTokens = await sellTokensForUser(data.web3)
-            await sellingTokens.wait()
+            await sellTokensForUser(data.web3)
             dispatch({
                 type: SELL_TOKENS_SUCCESS,
                 data: { status: false }
             })
         } catch (error) {
+            console.log("error:",error)
             dispatch({
                 type: SELL_TOKENS_FAILURE,
                 data: { status: false, error: error }

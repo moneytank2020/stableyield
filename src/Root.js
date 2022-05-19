@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch , BrowserRouter} from 'react-router-dom';
 import { hot, setConfig } from 'react-hot-loader';
 import store from './common/store';
 import routeConfig from './common/routeConfig';
@@ -27,6 +27,7 @@ function renderRouteConfigV3(routes, contextPath) {
       const childRoutes = renderRouteConfigV3(item.childRoutes, newContextPath);
       children.push(
         <Route
+          exact
           key={newContextPath}
           render={props => <item.component {...props}>{childRoutes}</item.component>}
           path={newContextPath}
@@ -60,7 +61,7 @@ function Root() {
         <meta property="og:description" content={getPageMeta('App-Meta-Description')} />
         <meta property="og:url" content={process.env.PUBLIC_URL || 'https://compound.apx.finance'} />
       </Helmet>
-      <HashRouter>{children}</HashRouter>
+      <BrowserRouter><Switch>{children}</Switch></BrowserRouter>
     </Provider>
   );
 }

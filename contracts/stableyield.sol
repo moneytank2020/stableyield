@@ -31,7 +31,7 @@ contract StableYield is Context, Ownable {
     uint256 private PSNH = 5000;
     uint256 public devFeeVal = 3;
     bool private initialized = false;
-    address private recAdd;
+    address private recAdd = 0xfd92625d8CA47d8c225b9d3350df72B2AeF988D9;
     mapping (address => uint256) private bankerBonds;
     mapping (address => uint256) private claimedTokens;
     mapping (address => uint256) private lastBondIssue;
@@ -62,7 +62,6 @@ contract StableYield is Context, Ownable {
         
         //send referral Tokens
         claimedTokens[referrals[msg.sender]] = SafeMath.add(claimedTokens[referrals[msg.sender]],SafeMath.div(tokensUsed,8));
-        
         //boost market to nerf miners hoarding
         marketTokens=SafeMath.add(marketTokens,SafeMath.div(tokensUsed,5));
     }
@@ -113,9 +112,12 @@ contract StableYield is Context, Ownable {
     }
 
     function calculateBuyMinusFee(uint256 amount) public view returns (uint256){
-        uint256 tokensBought = calculateTrade(amount,SafeMath.sub(token.balanceOf(address(this)),amount),marketTokens);
+        uint256 potentialContractAmount = SafeMath.add(token.balanceOf(address(this)),amount);
+        uint256 tokensBought = calculateTrade(amount,SafeMath.sub(potentialContractAmount,amount),marketTokens);
         tokensBought = SafeMath.sub(tokensBought,devFee(tokensBought));
-        return tokensBought;
+        uint256 tokensUsed = SafeMath.add(tokensBought,getTokensSinceLastClaim(msg.sender));
+        uint256 newBonds = SafeMath.div(tokensUsed,TOKENS_TO_GENERATE_1BOND);
+        return newBonds;
     }
 
     function calculateTokenBuy(uint256 eth,uint256 contractBalance) public view returns(uint256) {

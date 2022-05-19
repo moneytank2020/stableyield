@@ -1,3 +1,6 @@
+import { toContainElement } from '@testing-library/jest-dom/dist/matchers'
+import { getAddress } from 'ethers/lib/utils'
+
 // import { getRewardsPersecondAbi } from './RewardsPerSecondAbis'
 const { ethers, BigNumber } = require('ethers')
 
@@ -40,6 +43,12 @@ const getContract = async(web3) =>{
     return stableYieldContract
 }
 
+const getUserAddress = async(web3) =>{
+    const signer = await getSigner(web3)
+    const address = await signer.getAddress()
+    return address
+}
+
 const getTokenContact = async(web3) =>{
     const stableYieldContract = await getContract(web3)
     const tokenAddress = await stableYieldContract.token_address()
@@ -48,8 +57,14 @@ const getTokenContact = async(web3) =>{
 }
 
 const buyTokensForUser = async(web3, amount, referral) =>{
+    let ref = referral
+    
+    if(!ethers.utils.isAddress(referral)){
+        const address = await getUserAddress(web3)
+        ref = address
+    }
     const stableYieldContract = await getContract(web3)
-    const tx = await stableYieldContract.buyTokens(amount, referral)
+    const tx = await stableYieldContract.buyTokens(ethers.utils.parseEther(amount), ref)
 }
 
 const sellTokensForUser = async(web3) => {
@@ -58,10 +73,15 @@ const sellTokensForUser = async(web3) => {
     await tx.wait()
 }
 
-const tokenReward = async(web3) =>{
+const getTokenReward = async(web3) =>{
     const stableYieldContract = await getContract(web3)
-    const tx = await stableYieldContract.tokenReward()
-    await tx.wait()
+    const address = await getUserAddress(web3)
+    console.log("address:",address)
+    const rewards2 = await stableYieldContract.getMyTokens(address)
+    console.log("reward2:",rewards2)
+    const rewards = await stableYieldContract.tokenRewards(address)
+    console.log("reward:",rewards)
+    return `${Number(ethers.utils.formatEther(rewards.toString())).toFixed(3)}`
 }
 
 const getUserTokenBalance = async(web3) =>{
@@ -69,7 +89,7 @@ const getUserTokenBalance = async(web3) =>{
     const signer = await getSigner(web3)
     const userAddress = await signer.getAddress();
     var balance = await token.balanceOf(userAddress)
-    return ethers.utils.formatEther(balance.toString())
+    return Number(ethers.utils.formatEther(balance.toString())).toFixed(3)
 }
 
 const getUserTokensMinusFees = async(web3) => {
@@ -81,14 +101,13 @@ const getUserTokensMinusFees = async(web3) => {
 const getBondsForTokens = async(web3, amount) =>{
     const contract = await getContract(web3)
     const bondsForTokens = await contract.calculateBuyMinusFee(ethers.utils.parseEther(amount))
-    console.log("testing:",Number(bondsForTokens))
     return Number(bondsForTokens)
 }
 
 const getContractTokenBalance = async(web3) =>{
     const contract = await getContract(web3)
     var balance = await contract.getBalance()
-    return ethers.utils.formatEther(balance.toString())
+    return Number(ethers.utils.formatEther(balance.toString())).toFixed(3)
 }
 
 
@@ -110,8 +129,20 @@ const getTaxFee = async(web3)=>{
 
 const getUserBonds = async(web3)=>{
     const stableYieldContract = await getContract(web3)
-    var bonds = await stableYieldContract.getMyBonds()
+    const signer = await getSigner(web3)
+    const userAddress = await signer.getAddress();
+    var bonds = await stableYieldContract.getMyBonds(userAddress)
     return `${bonds}`
+}
+
+const reInvestUserBonds = async(web3,referral) => {
+    let ref = referral
+    if(!ethers.utils.isAddress(referral)){
+        const address = await getUserAddress(web3)
+        ref = address
+    }
+    const stableYieldContract = await getContract(web3)
+    await stableYieldContract.generateTokens(ref)
 }
 
 const approve = async(web3) =>{
@@ -139,6 +170,7 @@ const hasApproved = async(web3)=>{
 
 export{
     buyTokensForUser,
+    reInvestUserBonds,
     approve,
     hasApproved,
     sellTokensForUser,
@@ -148,7 +180,8 @@ export{
     getContractTokenBalance,
     getUserBonds,
     getBondsForTokens,
-    getUserTokensMinusFees
+    getUserTokensMinusFees,
+    getTokenReward
 }
 
 // const getRewardTokenBalance = async(web3) => {

@@ -1,16 +1,7 @@
 const styles = theme => ({
   container: {
     paddingTop: '4px',
-  },
-  lotterytopDescription: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-  },
-  lotterytopTimeLeftTillDraw: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-end',
+    background: '#FFFFFFFF',
   },
   divider:{
     color: theme.palette.text.primary, 
@@ -22,6 +13,8 @@ const styles = theme => ({
     letterSpacing: '0',
     lineHeight: '32px',
     fontWeight: '550',
+    marginBottom: 10, 
+    marginRight: 10,
     color: theme.palette.text.primary,
     display: 'flex',
     alignItems: 'center',

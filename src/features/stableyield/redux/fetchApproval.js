@@ -63,12 +63,12 @@ export function fetchHasApproved(data) {
 
 export function useFetchApproval() {
     const dispatch = useDispatch();
-    const { fetchApprovalPending, fetchApprovalError, fetchHasApprovedPending, fetchHasApprovedError, fetchNeedApproval } = useSelector(state => ({
+    const { fetchApprovalPending, fetchApprovalError, fetchHasApprovedPending, fetchHasApprovedError, isApproved } = useSelector(state => ({
         fetchApprovalPending: state.stableyield.fetchApprovalPending,
         fetchApprovalError: state.stableyield.fetchApprovalError,
         fetchHasApprovedPending: state.stableyield.fetchHasApprovedPending,
         fetchHasApprovedError: state.stableyield.fetchHasApprovedError,
-        fetchNeedApproval: state.stableyield.fetchNeedApproval
+        isApproved: state.stableyield.isApproved
     }))
 
     const boundAction = useCallback((data) => {
@@ -87,7 +87,7 @@ export function useFetchApproval() {
         fetchApprovalError,
         fetchHasApprovedPending,
         fetchHasApprovedError,
-        fetchNeedApproval
+        isApproved
     }
 }
 
@@ -102,7 +102,7 @@ export function reducer(state, action) {
             return {
                 ...state,
                 fetchApprovalPending: action.data.status,
-                fetchNeedApproval: action.data.hasApproved
+                isApproved: action.data.hasApproved
             }
         case FETCH_APPROVAL_FAILURE:
             return {
@@ -119,7 +119,7 @@ export function reducer(state, action) {
             return {
                 ...state,
                 fetchHasApprovedPending: action.data.status,
-                fetchNeedApproval: action.data.hasApproved
+                isApproved: action.data.hasApproved
             }
         case FETCH_HAS_APPROVED_FAILURE:
             return {

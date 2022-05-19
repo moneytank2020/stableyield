@@ -19,15 +19,15 @@ const getTheme = mode => {
   return (themes[mode] = themes[mode] || createThemeMode(mode === 'dark'));
 };
 
-const ScrollToTop = memo(function () {
-  const { pathname } = useLocation();
+// const ScrollToTop = memo(function () {
+//   const { pathname } = useLocation();
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+//   useEffect(() => {
+//     window.scrollTo(0, 0);
+//   }, [pathname]);
 
-  return null;
-});
+//   return null;
+// });
 
 export default function App({ children }) {
   const { t } = useTranslation();
@@ -64,7 +64,7 @@ export default function App({ children }) {
     <StylesProvider injectFirst>
       <ThemeProvider theme={theme}>
         <SnackbarProvider>
-          <ScrollToTop />
+          {/* <ScrollToTop /> */}
           <div className={classes.page}>
             <Header
               links={

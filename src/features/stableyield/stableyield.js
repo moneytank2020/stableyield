@@ -5,15 +5,22 @@ import Grid from '@material-ui/core/Grid';
 import { useConnectWallet } from 'features/home/redux/hooks';
 import styles from './styles';
 import { getNetworkFriendlyName } from '../helpers/getNetworkData';
-import InvestCard from './investcard';
 import BondCard from './bondcard';
-import ReferalCard from './referalcard';
+import ReferalCard from './referralcard';
 import RewardCard from './rewardcard';
 import { useFetchApproval } from './redux/fetchApproval';
 import { useFetchApyAndRate } from './redux/fetchApyAndRate';
 import { useFetchTaxFee } from './redux/fetchTaxFee';
 import { useFetchUserBalance } from './redux/fetchUserBalance';
 import { useFetchBondsForTokens } from './redux/fetchBondsForToken';
+import { Typography } from '@material-ui/core';
+import { useFetchContractBalance } from './redux/fetchContractBalance';
+import { fetchUserBonds, useFetchUserBonds } from './redux/fetchUserBonds';
+import { useBuyTokens } from './redux/buyTokens';
+import { useFetchUserTokenReward } from './redux/fetchUserTokenRewards';
+import { useSellTokens } from './redux/sellTokens';
+import BuyCard from './buycard';
+import InvestCard from './investcard';
 
 
 const FETCH_INTERVAL_MS = 15 * 1000;
@@ -23,11 +30,15 @@ const useStyles = makeStyles(styles);
 export default function StableYield() {
   const { t } = useTranslation();
   const { web3, address, networkId, connected } = useConnectWallet();
-  const { fetchBondsForTokenPending, fetchBondsForTokensValue } = useFetchBondsForTokens({ web3 })
   const { fetchHasApproved, fetchHasApprovedPending, fetchNeedApproval } = useFetchApproval({ web3 })
+  const { fetchContractBalance } = useFetchContractBalance({ web3 })
   const { fetchApyAndRate } = useFetchApyAndRate({ web3 })
   const { fetchTaxFee } = useFetchTaxFee({web3})
   const { fetchUserBalance } = useFetchUserBalance({web3})
+  const { fetchUserBonds } = useFetchUserBonds({ web3 })
+  const { buyTokensPending } = useBuyTokens({ web3 })
+  const { sellTokensPending } = useSellTokens({ web3 })
+  const { fetchUserTokenReward } = useFetchUserTokenReward({ web3 })
   const classes = useStyles();
 
   useEffect(() => {
@@ -35,6 +46,14 @@ export default function StableYield() {
     // return () => clearInterval(id);
   });
 
+  useEffect(()=>{
+    window.ethereum.on('accountsChanged', function (accounts) {
+      if (address && web3) {
+        fetchUserBalance({ web3 })
+        fetchUserBonds({ web3 })
+      }
+    })
+  })
 
   useEffect(() => {
     const fetch = () => {
@@ -68,17 +87,21 @@ export default function StableYield() {
       }
     }
     retrieveApyAndRateAndTax()
-  }, [web3]);
+  }, [web3, ]);
  
 
   useEffect(() => {
     const getUserBalance = ()=>{
-      if (address && web3) {
+      if (address && web3 && !buyTokensPending && !sellTokensPending) {
         fetchUserBalance({ web3 })
+        fetchContractBalance({ web3 })
+        fetchUserBonds({ web3 })
+        console.log("fethcing user blanace 1")
+        fetchUserTokenReward({ web3 })
       }
     }
     getUserBalance()
-  }, [web3]);
+  }, [web3, buyTokensPending, sellTokensPending]);
 
   const chainNameLowercase = getNetworkFriendlyName().toLowerCase();
   const activePoolCount = 0
@@ -86,24 +109,27 @@ export default function StableYield() {
     <Grid container className={classes.container} direction="column">
       {web3 ? (
         <Grid item>
+          <Typography className={classes.title}>
+            Deposit and Earn
+          </Typography>
           <Grid container direction="row" spacing={2}>
             <Grid item xs={12} md={6}>
               <Grid container direction="column">
                 <Grid item>
-                  <InvestCard hasApproved={fetchNeedApproval} />
+                  <BuyCard/>
                 </Grid>
                 <Grid item>
-                  <BondCard hasApproved={fetchNeedApproval} />
+                  <BondCard/>
                 </Grid>
               </Grid>
             </Grid>
             <Grid item xs={12} md={6}>
               <Grid container direction="column" spacing={2}>
                 <Grid item>
-                  <ReferalCard />
+                  <InvestCard />
                 </Grid>
                 <Grid item>
-                  <RewardCard hasApproved={fetchNeedApproval}/>
+                  <ReferalCard />
                 </Grid>
               </Grid>
             </Grid>
