@@ -15,7 +15,7 @@ async function getTokens(){
     const signer = await ethers.getSigner(account)
     const usdc = await new ethers.Contract("0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d", usdcAbi , signer)
     const value = BigNumber.from("500000000000000000000")
-    const tokenTransfer = await usdc.transfer("0xfd92625d8CA47d8c225b9d3350df72B2AeF988D9",value)
+    const tokenTransfer = await usdc.transfer("0x8d449a93D2155D8cF4d2ee85effCAe914F401cfd",value)
     await tokenTransfer.wait()
 }
 

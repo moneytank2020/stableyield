@@ -30,7 +30,7 @@ export default function InvestCard(){
             <Grid container direction="row">
                 <Grid item md={6} xs={6}>
                     <Typography cstyle={{ fontSize: 18 }}>
-                        Daily return:
+                        Daily return
                     </Typography>
                 </Grid>
                 <Grid item md={6} xs={6} display="flex" >
@@ -44,7 +44,7 @@ export default function InvestCard(){
             <Grid container direction="row">
                 <Grid item md={6} xs={6}>
                     <Typography cstyle={{ fontSize: 18 }}>
-                        APR:
+                        APR
                     </Typography>
                 </Grid>
                 <Grid item md={6} xs={6} display="flex" >
@@ -58,7 +58,7 @@ export default function InvestCard(){
             <Grid container direction="row">
                 <Grid item md={6} xs={6}>
                     <Typography cstyle={{ fontSize: 18 }}>
-                    Total Fee:
+                    Total Fee
                     </Typography>
                 </Grid>
                 <Grid item md={6} xs={6} display="flex" >

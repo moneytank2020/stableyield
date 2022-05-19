@@ -2,14 +2,22 @@
   font-family: 'proxima-nova', sans-serif !important;
   text-rendering: optimizeLegibility;
   box-shadow: none !important;
+
 }
 
 .makeStyles-accordion-161 {
   border-radius: 23px !important;
 }
+
 .makeStyles-link-26 span {
-  color: #075be8;
+  color: #ffffff !important;
   text-transform: capitalize !important;
+}
+
+.MuiDrawer-paperAnchorRight {
+  left: auto;
+  right: 0;
+  background-color: #052354 !important;
 }
 
 .makeStyles-details-163 {
@@ -17,7 +25,7 @@
 }
 
 .makeStyles-dark-17 {
-  background-color: rgba(255, 255, 255, 0) !important;
+  background-color: #0046a8 !important;
 }
 
 .makeStyles-container-148 {
@@ -95,7 +103,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #fbf9f6;
+  background-color: #fafbff !important;
 }
 
 .tooltip-toggle {
@@ -110,4 +118,8 @@ body {
   .hidden-xs {
     display: none !important;
   }
+}
+
+.makeStyles-page-1 {
+  background-color: #fafbff !important;
 }

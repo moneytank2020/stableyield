@@ -23,9 +23,9 @@ const styles = theme => ({
     marginBottom: '20px',
     width: 'calc(100% - 20px)',
     margin: '0 auto',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#0046a8',
     boxShadow:
-      '0 4px 18px 0px rgba(' +
+      '0 4px 48px 0px rgba(' +
       hexToRgb(blackColor) +
       ', 0.12), 0 7px 10px -5px rgba(' +
       hexToRgb(blackColor) +
@@ -65,7 +65,7 @@ const styles = theme => ({
       borderRadius: '3px',
       textTransform: 'none',
       whiteSpace: 'nowrap',
-      color: theme.palette.text.primary,
+      color: '#fff',
       alignItems: 'flex-end',
       '&:hover,&:focus': {
         color: 'inherit',
@@ -230,8 +230,8 @@ const styles = theme => ({
     padding: 0,
     cursor: 'pointer',
     fontSize: '1rem',
-    fontWeight: 400,
-    color: '#000',
+    fontWeight: 500,
+    color: '#fff',
     textDecoration: 'none',
     textTransform: 'lowercase',
     '&:hover': {

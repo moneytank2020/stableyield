@@ -34,35 +34,21 @@ const Header = ({ links }) => {
   return (
     <AppBar className={`${classes.appBar} ${classes.dark}`} position="relative">
       <Toolbar className={classes.container}>
-        {/* <Link to={`/${chain}`}> */}
-          {/* <Button className={classes.title}> */}
-            {/* <Hidden xsDown> */}
-              {/* <img
-                alt="APEX"
-                src={require('images/apexcompound.png')}
-                height={'45px'}
-                className={classes.logo}
-              /> */}
-            {/* </Hidden> */}
-            {/* <Hidden smUp> */}
-              {/* <img
-                alt="APEX"
-                src={require('images/apexcompound.png')}
-                height={'45px'}
-                className={classes.logo}
-              /> */}
-            {/* </Hidden> */}
-          {/* </Button> */}
-        {/* </Link> */}
-
+        <img
+            alt="stableyield"
+            src={require('images/sylogo.png')}
+            height={'55px'}
+            className={classes.logo}
+        />
         <div className={classes.middleNav}>
           <Hidden smDown>
-            {renderLink('Discord', t('Discord'), '', classes)}
+            {renderLink('Telegram', t('Telegram'), '', classes)}
             {renderLink('Support', t('Support'), '', classes)}
           </Hidden>
         </div>
 
         <Hidden smDown implementation="css">
+
           <div className={classes.collapse}>{links}</div>
         </Hidden>
         <Hidden mdUp>
@@ -96,7 +82,7 @@ const Header = ({ links }) => {
           </IconButton>
           <div className={classes.appResponsive}>{links}</div>
           <div className={classes.middleNav}>
-              {renderLink('Discord', t('Discord'), '', classes)}
+              {renderLink('Telegram', t('Telegram'), '', classes)}
           </div>
           <div style={{ marginTop: '10px' }} className={classes.middleNav}>
             {renderLink('Support', t('Support'), '', classes)}
@@ -130,8 +116,8 @@ const LinkSidebar = ({ name, label, icon, classes }) => (
 const getLinkUrl = name => {
   if (name === 'buy'){
     return getNetworkBuyUrl()
-  } else if (name === 'Discord'){
-    return `https://discord.gg/PUTnJq7bUD`
+  } else if (name === 'Telegram'){
+    return `https://Telegram.gg/PUTnJq7bUD`
   } else {
     return `https://${name}.apx.finance`
   };

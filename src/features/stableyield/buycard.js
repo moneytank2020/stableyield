@@ -63,9 +63,12 @@ export default function BuyCard() {
                 </Grid>
                 <Grid item md={6} xs={6} display="flex" >
                     <Box display="flex" direction="row" justifyContent="flex-end">
-                        <Typography className={classes.text}>
-                            USDC
-                        </Typography>
+                        <img
+                            alt="stableyield"
+                            src={require('images/usdc.png')}
+                            height={'25px'}
+                            className={classes.logo}
+                        />
                         <Typography className={classes.valueText}>
                             {fetchContractBalanceValue}
                         </Typography>
@@ -80,9 +83,15 @@ export default function BuyCard() {
                 </Grid>
                 <Grid item md={6} xs={6} display="flex" >
                     <Box display="flex" direction="row" justifyContent="flex-end">
-                        <Typography className={classes.text}>
-                            USDC
-                        </Typography>
+                        {/*<Typography className={classes.text}>*/}
+                        {/*    USDC*/}
+                        {/*</Typography>*/}
+                        <img
+                            alt="stableyield"
+                            src={require('images/usdc.png')}
+                            height={'25px'}
+                            className={classes.logo}
+                        />
                         <Typography className={classes.valueText}>
                             {fetchUserBalanceValue}
                         </Typography>
