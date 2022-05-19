@@ -49,6 +49,13 @@ export function NetworkConnectNotice({
     window.location.reload();
   };
 
+  const changeToRightNetowk = async() =>{
+    await window.ethereum.request({
+      method: 'wallet_switchEthereumChain',
+      params: [{ chainId: '0x61' }], // chainId must be in hexadecimal numbers
+    });
+  }
+
   const supportedNetwork = useMemo(() => {
     return isSupportedNetwork
       ? {
@@ -89,14 +96,14 @@ export function NetworkConnectNotice({
             <Button onClick={targetNetworkSetup} className={classes.button}>
               {t('Network-SwitchToNetwork', { network: targetNetworkFriendlyName })}
             </Button>
-            {isSupportedNetwork ? (
+            {/* {isSupportedNetwork ? (
               <Button
-                onClick={() => networkRedirect(supportedNetwork.url)}
+                onClick={() => changeToRightNetowk(supportedNetwork.url)}
                 className={classes.button}
               >
                 {t('Network-GoToApp', { network: supportedNetwork.name })}
               </Button>
-            ) : null}
+            ) : null} */}
             <Button onClick={disconnectWallet} className={classes.button}>
               {t('Network-DisconnectWallet')}
             </Button>

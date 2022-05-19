@@ -30,7 +30,7 @@ const styles = theme => ({
   },
   approveButton:{
     width: '100%',
-    marginTop: 20,
+    marginTop: 10,
     marginBottom: 20,
     backgroundColor: "#11ad00",
     borderRadius: 100 

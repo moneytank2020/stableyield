@@ -29,7 +29,7 @@ export default function BuyCard() {
         referral:queryParams.get('ref')
     })
 
-    const { fetchApproval, isApproved } = useFetchApproval({ web3 })
+    const { fetchApproval, isApproved, fetchApprovalPending, fetchHasApprovedPending } = useFetchApproval({ web3 })
     const { fetchBondsForTokens, fetchBondsForTokensValue } = useFetchBondsForTokens({ buySettings })
     const { fetchUserBalanceValue } = useFetchUserBalance({ web3 })
     const { fetchContractBalanceValue } = useFetchContractBalance({ web3 })
@@ -117,7 +117,7 @@ export default function BuyCard() {
                     {parseInt(fetchBondsForTokensValue) > 0 ? `You receive: ${fetchBondsForTokensValue} BONDS` : ""}
                 </Typography>
             </Grid>
-            <Button variant="contained" onClick={() => { handleClick() }} className={isApproved ? classes.button : classes.approveButton}>{isApproved ? "BUY" : "APPROVE"}</Button>
+            <Button variant="contained" onClick={() => { handleClick() }} disabled={fetchApprovalPending || fetchHasApprovedPending? true : false } className={isApproved ? classes.button : classes.approveButton}>{isApproved ? "BUY" : "APPROVE"}</Button>
         </Card>
     );
 }

@@ -1,10 +1,14 @@
+import { grey } from "@material-ui/core/colors";
+
 const styles = theme => ({
   notice: {
-    backgroundColor: theme.palette.background.secondary,
+    backgroundColor: '#FFFFFF',
     padding: 25,
     marginBottom: 25,
     textAlign: 'center',
-    color: theme.palette.primary.main,
+    border: `5px solid ${grey[200]}`,
+    borderRadius:'25px',
+    color: theme.palette.text.primary,
     '& > :last-child': {
       marginBottom: 0,
     },
@@ -18,7 +22,11 @@ const styles = theme => ({
   button: {
     border: '1px solid ' + theme.palette.background.border,
     padding: '4px 8px',
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.text.primary,
+    '&:hover': {
+      backgroundColor: theme.palette.background.border,
+      cursor: 'pointer',
+    },
     textTransform: 'none',
     margin: '10px 10px 0 0',
   },

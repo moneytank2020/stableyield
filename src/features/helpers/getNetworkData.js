@@ -49,7 +49,7 @@ const networkFriendlyName = {
   128: 'HECO',
   43114: 'AVAX',
   137: 'Polygon',
-  31337: 'Fantom',
+  31337: 'BSC',
   250: 'Fantom',
   4002: 'Fantom',
   1666600000: 'Harmony',

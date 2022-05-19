@@ -20,7 +20,7 @@ export default function BondCard() {
     const { t } = useTranslation();
     const { web3, address } = useConnectWallet();
     const classes = useStyles();
-    const { fetchApproval, isApproved } = useFetchApproval({ web3 })
+    const { fetchApproval, isApproved, fetchApprovalPending } = useFetchApproval({ web3 })
     const { reInvestBonds } = useReInvestBonds({ web3 })
     const { sellTokens } = useSellTokens({web3})
     const { fetchUserTokenRewardValue } = useFetchUserTokenReward({ web3 })
@@ -61,10 +61,10 @@ export default function BondCard() {
             </Grid>
             <Grid container direction="row" spacing={2}>
                 <Grid item md={6} xs={6}>
-                    <Button variant="contained" onClick={() => { handleReInvestClick() }} className={classes.button}>{isApproved ? "Reinvest" : "Approve"}</Button>
+                    <Button variant="contained" onClick={() => { handleReInvestClick() }} className={isApproved ? classes.button : classes.approveButton}>{isApproved ? "Reinvest" : "Approve"}</Button>
                 </Grid>
                 <Grid item md={6} xs={6} display="flex" >
-                    <Button variant="contained" onClick={() => { handleRedeemClick() }} className={classes.button}>{isApproved ? "Redeem" : "Approve"}</Button>
+                    <Button variant="contained" onClick={() => { handleRedeemClick() }} className={isApproved ? classes.button : classes.approveButton}>{isApproved ? "Redeem" : "Approve"}</Button>
                 </Grid>
             </Grid>
 

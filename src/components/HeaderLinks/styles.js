@@ -217,7 +217,8 @@ const styles = theme => ({
     margin: '12px 0',
     fontSize: '14px',
     fontWeight: 'bold',
-    backgroundColor: theme.palette.background.secondary,
+    backgroundColor: theme.palette.text.primary,
+    borderRadius:"20px",
     color: '#fff',
     '&:hover': {
       backgroundColor: theme.palette.background.border,
@@ -227,7 +228,7 @@ const styles = theme => ({
     },
   },
   icon: {
-    color: theme.palette.text.primary,
+    color: whiteColor,
     width: '24px',
     marginRight: '4px',
   },

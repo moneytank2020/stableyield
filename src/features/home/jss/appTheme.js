@@ -4,6 +4,9 @@ import { createTheme } from '@material-ui/core/styles';
 const createThemeMode = isNightMode =>
   createTheme({
     palette: {
+      action:{
+        disabled:'#000'
+      },
       type: isNightMode ? 'dark' : 'light',
       background: {
         default: isNightMode ? '#FFFFFFFF' : '#FFFFFFFF',
@@ -15,7 +18,7 @@ const createThemeMode = isNightMode =>
         paused: isNightMode ? '#2B2A5A' : '#FCE57E',
         retired: isNightMode ? '#d32f2f' : '#e57373',
         hover: isNightMode ? '#2B2A3D' : '#EFE6DC',
-        border: isNightMode ? '#121127' : '#121127',
+        border: isNightMode ? '#012d75' : '#012d75',
         overlay: isNightMode ? 'rgba(0, 0, 0, 0.75)' : 'rgba(255, 255, 255, 0.75)',
       },
       primary: {
@@ -42,7 +45,7 @@ const createThemeMode = isNightMode =>
       // for dropdown menu items
       MuiButtonBase: {
         root: {
-          color: isNightMode ? '#fff' : '#000',
+          color: isNightMode ? '#000' : '#000',
         },
       },
       MuiCheckbox: {

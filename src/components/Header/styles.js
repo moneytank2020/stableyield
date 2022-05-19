@@ -21,10 +21,9 @@ const styles = theme => ({
     borderRadius: '3px',
     padding: '0.625rem 0',
     marginBottom: '20px',
-    color: grayColor[15],
     width: 'calc(100% - 20px)',
     margin: '0 auto',
-    backgroundColor: whiteColor,
+    backgroundColor: '#FFFFFF',
     boxShadow:
       '0 4px 18px 0px rgba(' +
       hexToRgb(blackColor) +
@@ -148,15 +147,15 @@ const styles = theme => ({
     color: whiteColor,
   },
   dark: {
-    color: whiteColor,
-    backgroundColor: theme.palette.background.default,
+    color: theme.palette.text.primary,
+    backgroundColor: '#FFFFFF',
     boxShadow: '0px 0px',
   },
   white: {
     border: '0',
     padding: '0.625rem 0',
     marginBottom: '20px',
-    color: grayColor[15],
+    color: whiteColor,
     backgroundColor: whiteColor + ' !important',
     boxShadow:
       '0 4px 18px 0px rgba(' +
@@ -306,7 +305,7 @@ const styles = theme => ({
     textTransform: 'uppercase',
     letterSpacing: '1px',
     fontSize: '16px',
-    color: theme.palette.text.secondary,
+    color: 'theme.palette.text.secondary',
     margin: '0 0 8px 0',
   },
   modalSectionText: {},
