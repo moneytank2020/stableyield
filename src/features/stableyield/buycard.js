@@ -61,7 +61,7 @@ export default function BuyCard() {
         if (!isApproved) {
             await fetchApproval({ web3 })
         } else {
-            await reInvestBonds({ web3, referral })
+            await reInvestBonds({ web3, referral:buySettings.referral})
         }
     }
 
