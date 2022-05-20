@@ -122,7 +122,7 @@ export default function StableYield() {
               </Grid>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Grid container direction="column" spacing={2}>
+              <Grid container direction="column" >
                 <Grid item>
                   <InvestCard />
                 </Grid>

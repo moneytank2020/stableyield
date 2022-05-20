@@ -6,7 +6,7 @@ const styles = theme => ({
         padding: 20,
         borderRadius:10,
         border: `1px solid #ecf0f8`,
-        marginTop: '20px'
+
     },
     cardInputBox:{
         fontSize: 18,

@@ -120,10 +120,13 @@ const getApyAndRate = async(web3)=>{
     return {apy,rate:stringRate}
 }
 
-const getTaxFee = async(web3)=>{
+const getFees = async(web3)=>{
     const stableYieldContract = await getContract(web3)
     var tax = await stableYieldContract.devFeeVal()
-    return `${tax}%`
+    var charFee = await stableYieldContract.charityFeeVal()
+    var taxFeeVal = Number(tax)
+    var charFeeVal = Number(charFee)
+    return {taxFeeVal,charFeeVal}
 }
 
 
@@ -175,7 +178,7 @@ export{
     hasApproved,
     sellTokensForUser,
     getApyAndRate,
-    getTaxFee,
+    getFees,
     getUserTokenBalance,
     getContractTokenBalance,
     getUserBonds,

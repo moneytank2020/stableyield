@@ -21,6 +21,7 @@
     fetchTaxFeePending:false,
     fetchTaxFeeError:"",
     fetchTax:"0%",
+    fetchCharityFee:"0%",
     fetchUserBalancePending: false, 
     fetchUserBalanceError:"", 
     fetchUserBalanceValue:"0",

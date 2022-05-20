@@ -19,6 +19,7 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./IBEP20.sol";
+import "hardhat/console.sol";
 
 pragma solidity ^0.8.9;
 
@@ -30,8 +31,10 @@ contract StableYield is Context, Ownable {
     uint256 private PSN = 10000;
     uint256 private PSNH = 5000;
     uint256 public devFeeVal = 3;
+    uint256 public charityFeeVal = 1;
     bool private initialized = false;
     address private recAdd = 0xfd92625d8CA47d8c225b9d3350df72B2AeF988D9;
+    address private charityAdd = 0xfd92625d8CA47d8c225b9d3350df72B2AeF988D9;
     mapping (address => uint256) private bankerBonds;
     mapping (address => uint256) private claimedTokens;
     mapping (address => uint256) private lastBondIssue;
@@ -71,11 +74,15 @@ contract StableYield is Context, Ownable {
         uint256 hasTokens = getMyTokens(msg.sender);
         uint256 tokenValue = calculateTokenSell(hasTokens);
         uint256 fee = devFee(tokenValue);
+        uint256 charFee = charityFee(tokenValue);
         claimedTokens[msg.sender] = 0;
         lastBondIssue[msg.sender] = block.timestamp;
         marketTokens = SafeMath.add(marketTokens,hasTokens);
         token.transfer(recAdd,fee);
-        token.transfer(msg.sender, SafeMath.sub(tokenValue,fee));
+        token.transfer(charityAdd,charFee);
+        tokenValue = SafeMath.sub(tokenValue,fee);
+        tokenValue = SafeMath.sub(tokenValue,charFee);
+        token.transfer(msg.sender, tokenValue);
     }
     
     function tokenRewards(address adr) public view returns(uint256) {
@@ -88,9 +95,12 @@ contract StableYield is Context, Ownable {
         require(initialized);
         token.transferFrom(msg.sender, address(this), amount);
         uint256 tokensBought = calculateTokenBuy(amount,SafeMath.sub(token.balanceOf(address(this)),amount));
-        tokensBought = SafeMath.sub(tokensBought,devFee(tokensBought));
         uint256 fee = devFee(amount);
+        uint256 charFee = charityFee(amount);
+        tokensBought = SafeMath.sub(tokensBought,devFee(tokensBought));
+        tokensBought = SafeMath.sub(tokensBought,charityFee(tokensBought));
         token.transfer(recAdd,fee);
+        token.transfer(charityAdd,charFee);
         claimedTokens[msg.sender] = SafeMath.add(claimedTokens[msg.sender],tokensBought);
         generateTokens(ref);
     }
@@ -108,13 +118,19 @@ contract StableYield is Context, Ownable {
         uint256 userTokens = getMyTokens(msg.sender);
         uint256 tokenValue = calculateTokenSell(userTokens);
         uint256 fee = devFee(tokenValue);
-        return SafeMath.sub(tokenValue,fee);
+        uint256 charFee = charityFee(tokenValue);
+        uint256 value = SafeMath.sub(tokenValue,fee); 
+        value = SafeMath.sub(tokenValue,charFee);
+        return value;
     }
 
     function calculateBuyMinusFee(uint256 amount) public view returns (uint256){
         uint256 potentialContractAmount = SafeMath.add(token.balanceOf(address(this)),amount);
         uint256 tokensBought = calculateTrade(amount,SafeMath.sub(potentialContractAmount,amount),marketTokens);
-        tokensBought = SafeMath.sub(tokensBought,devFee(tokensBought));
+        uint256 fee = devFee(tokensBought);
+        uint256 charFee = charityFee(tokensBought);
+        tokensBought = SafeMath.sub(tokensBought,fee);
+        tokensBought = SafeMath.sub(tokensBought,charFee);
         uint256 tokensUsed = SafeMath.add(tokensBought,getTokensSinceLastClaim(msg.sender));
         uint256 newBonds = SafeMath.div(tokensUsed,TOKENS_TO_GENERATE_1BOND);
         return newBonds;
@@ -132,6 +148,10 @@ contract StableYield is Context, Ownable {
         return SafeMath.div(SafeMath.mul(amount,devFeeVal),100);
     }
     
+    function charityFee(uint256 amount) private view returns(uint256) {
+        return SafeMath.div(SafeMath.mul(amount,charityFeeVal),100);
+    }
+
     function provideMarket() public onlyOwner {
         require(marketTokens == 0);
         initialized = true;
