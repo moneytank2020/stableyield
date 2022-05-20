@@ -22,6 +22,7 @@ const styles = theme => ({
   button: {
     border: '1px solid ' + theme.palette.background.border,
     padding: '4px 8px',
+    color:'#ffffff',
     backgroundColor: theme.palette.text.primary,
     '&:hover': {
       backgroundColor: theme.palette.background.border,

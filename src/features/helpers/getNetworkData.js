@@ -725,7 +725,7 @@ export const getNetworkConnectors = t => {
       };
     case 31337:
       return {
-        network: 'fantom',
+        network: 'binance',
         cacheProvider: true,
         providerOptions: {
           injected: {
@@ -733,36 +733,23 @@ export const getNetworkConnectors = t => {
               name: 'MetaMask',
             },
           },
-          'custom-wc-ftm': {
-            display: {
-              logo: require(`images/wallets/wallet-connect.svg`),
-              name: 'Wallet Connect',
-              description: t('Scan your WalletConnect to Connect'),
-            },
+          walletconnect: {
             package: WalletConnectProvider,
             options: {
               rpc: {
-                1: 'https://rpc.ftm.tools/',
-                31337: 'https://rpc.ftm.tools/',
-                250: 'https://rpc.ftm.tools/'
+                1: 'https://bsc-dataseed.binance.org/',
+                56: 'https://bsc-dataseed.binance.org/',
               },
             },
-            connector: async (ProviderPackage, options) => {
-              const provider = new ProviderPackage(options);
-
-              await provider.enable();
-
-              return provider;
-            },
           },
-          'custom-clover-fantom': {
+          'custom-clover-bsc': {
             display: {
               logo: require(`images/wallets/clover.png`),
               name: 'Clover Wallet',
               description: t('Connect with your Clover wallet and earn CLV'),
             },
             options: {
-              supportedChainIds: [250, 31337],
+              supportedChainIds: [56],
             },
             package: CloverConnector,
             connector: async (ProviderPackage, options) => {
@@ -771,7 +758,47 @@ export const getNetworkConnectors = t => {
               return provider.getProvider();
             },
           },
-          'custom-cb-ftm': {
+          'custom-binance': {
+            display: {
+              name: 'Binance',
+              description: t('Binance Chain Wallet'),
+              logo: require(`images/wallets/binance-wallet.png`),
+            },
+            package: 'binance',
+            connector: async (ProviderPackage, options) => {
+              const provider = window.BinanceChain;
+              await provider.enable();
+              return provider;
+            },
+          },
+          'custom-math': {
+            display: {
+              name: 'Math',
+              description: t('Math Wallet'),
+              logo: require(`images/wallets/math-wallet.svg`),
+            },
+            package: 'math',
+            connector: connectors.injected,
+          },
+          'custom-twt': {
+            display: {
+              name: 'Trust',
+              description: t('Trust Wallet'),
+              logo: require(`images/wallets/trust-wallet.svg`),
+            },
+            package: 'twt',
+            connector: connectors.injected,
+          },
+          'custom-safepal': {
+            display: {
+              name: 'SafePal',
+              description: t('SafePal App'),
+              logo: require(`images/wallets/safepal-wallet.svg`),
+            },
+            package: 'safepal',
+            connector: connectors.injected,
+          },
+          'custom-cb-bsc': {
             display: {
               logo: require(`images/wallets/coinbase.png`),
               name: 'Coinbase Wallet',
@@ -786,7 +813,7 @@ export const getNetworkConnectors = t => {
             connector: async (ProviderPackage, options) => {
               const walletLink = new ProviderPackage(options);
 
-              const provider = walletLink.makeWeb3Provider('https://rpc.ftm.tools/', 31337);
+              const provider = walletLink.makeWeb3Provider('https://bsc-dataseed.binance.org/', 56);
 
               await provider.enable();
 
