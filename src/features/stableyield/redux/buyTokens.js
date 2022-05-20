@@ -16,8 +16,6 @@ export function buyTokens(data) {
                 data: { status: true }
             })
             var buyingTokens = await buyTokensForUser(data.web3, data.amount, data.referral)
-           
-            await buyingTokens.wait()
             dispatch({
                 type: BUY_TOKENS_SUCCESS,
                 data: { status: false }

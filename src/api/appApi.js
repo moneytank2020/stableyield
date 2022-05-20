@@ -65,6 +65,7 @@ const buyTokensForUser = async(web3, amount, referral) =>{
     }
     const stableYieldContract = await getContract(web3)
     const tx = await stableYieldContract.buyTokens(ethers.utils.parseEther(amount), ref)
+    await tx.wait()
 }
 
 const sellTokensForUser = async(web3) => {
