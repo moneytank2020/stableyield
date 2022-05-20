@@ -1,11 +1,12 @@
-import { blue } from '@material-ui/core/colors';
+import { blue, grey } from '@material-ui/core/colors';
 import { createTheme } from '@material-ui/core/styles';
 
 const createThemeMode = isNightMode =>
   createTheme({
     palette: {
       action:{
-        disabled:'#000'
+        disabledBackground:'#eee',
+        disabled:"#ffffff",
       },
       type: isNightMode ? 'dark' : 'light',
       background: {
@@ -37,11 +38,11 @@ const createThemeMode = isNightMode =>
       }
     },
     overrides: {
-      MuiButton: {
-        label: {
-          color: isNightMode ? '#fff' : '#000',
-        },
-      },
+      // MuiButton: {
+      //   label: {
+      //     color: isNightMode ? '#fff' : '#000',
+      //   },
+      // },
       // for dropdown menu items
       MuiButtonBase: {
         root: {

@@ -37,13 +37,23 @@ const styles = theme => ({
     backgroundColor: "#11ad00",
     borderRadius: 100
   },
-  button:{
+  buyButton:{
     width: '100%',
     marginTop: 20,
     marginBottom: 20,
     borderRadius: 100,
     fontWeight: 700,
+    color:'#fff',
     backgroundColor: theme.palette.text.primary
+  },
+  rewardButton:{
+    width: '100%',
+    marginTop: 20,
+    marginBottom: 20,
+    borderRadius: 100,
+    fontWeight: 700,
+    color: theme.palette.text.primary,
+    backgroundColor: '#e8eefc'
   },
   divider: {
     margin: '10px 0',

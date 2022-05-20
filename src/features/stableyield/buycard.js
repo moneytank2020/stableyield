@@ -30,15 +30,19 @@ export default function BuyCard() {
         web3:web3,
         referral:queryParams.get('ref')
     })
+
+    const [buttonSettings] = useState({
+        isDisabled:false
+    })
     const { fetchUserTokenRewardValue } = useFetchUserTokenReward({ web3 })
     const { fetchApproval, isApproved, fetchApprovalPending, fetchHasApprovedPending } = useFetchApproval({ web3 })
     const { fetchBondsForTokens, fetchBondsForTokensValue } = useFetchBondsForTokens({ buySettings })
     const { fetchUserBalanceValue } = useFetchUserBalance({ web3 })
     const { fetchContractBalanceValue } = useFetchContractBalance({ web3 })
     const { fetchUserBondsValue } = useFetchUserBonds({ web3 })
-    const { buyTokens } = useBuyTokens({ web3 })
-    const { reInvestBonds } = useReInvestBonds({ web3 })
-    const { sellTokens } = useSellTokens({web3})
+    const { buyTokens, buyTokensPending } = useBuyTokens({ web3 })
+    const { reInvestBonds, reInvestBondsPending } = useReInvestBonds({ web3 })
+    const { sellTokens, sellTokensPending } = useSellTokens({web3})
     const classes = useStyles();
 
     
@@ -70,6 +74,14 @@ export default function BuyCard() {
     const handleAmountChange = async (amount) => {
         buySettings.amount = amount
         await fetchBondsForTokens(buySettings)
+    }
+
+    const isButtonDisabled = () =>{
+        return (reInvestBondsPending || 
+        fetchApprovalPending || 
+        fetchHasApprovedPending || 
+        buyTokensPending ||
+        sellTokensPending)
     }
 
     return (
@@ -145,7 +157,7 @@ export default function BuyCard() {
                     {parseInt(fetchBondsForTokensValue) > 0 ? `You receive: ${fetchBondsForTokensValue} BONDS` : ""}
                 </Typography>
             </Grid>
-            <Button variant="contained" onClick={() => { handleClick() }} disabled={fetchApprovalPending || fetchHasApprovedPending? true : false } className={isApproved ? classes.button : classes.approveButton}>{isApproved ? "BUY" : "APPROVE"}</Button>
+            <Button variant="contained" onClick={() => { handleClick() }} disabled={ isButtonDisabled() ? true : false } className={isApproved ? classes.buyButton : classes.approveButton}>{isApproved ? "BUY" : "APPROVE"}</Button>
             <Divider className={classes.divider} />
             <Grid container direction="row">
                 <Grid item md={6} xs={6}>
@@ -163,10 +175,10 @@ export default function BuyCard() {
             </Grid>
             <Grid container direction="row" spacing={2}>
                 <Grid item md={6} xs={6}>
-                    <Button variant="contained" onClick={() => { handleReInvestClick() }} className={isApproved ? classes.button : classes.approveButton}>{isApproved ? "Reinvest" : "Approve"}</Button>
+                    <Button disabled={isButtonDisabled() ? true : false } variant="contained" onClick={() => { handleReInvestClick() }} className={isApproved ? classes.rewardButton : classes.approveButton}>{isApproved ? "Reinvest" : "Approve"}</Button>
                 </Grid>
                 <Grid item md={6} xs={6} display="flex" >
-                    <Button variant="contained" onClick={() => { handleRedeemClick() }} className={isApproved ? classes.button : classes.approveButton}>{isApproved ? "Redeem" : "Approve"}</Button>
+                    <Button disabled={isButtonDisabled() ? true : false } variant="contained" onClick={() => { handleRedeemClick() }} className={isApproved ? classes.rewardButton : classes.approveButton}>{isApproved ? "Redeem" : "Approve"}</Button>
                 </Grid>
             </Grid>
         </Card>

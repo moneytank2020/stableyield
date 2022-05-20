@@ -61,10 +61,10 @@ export default function BondCard() {
             </Grid>
             <Grid container direction="row" spacing={2}>
                 <Grid item md={6} xs={6}>
-                    <Button variant="contained" onClick={() => { handleReInvestClick() }} className={isApproved ? classes.button : classes.approveButton}>{isApproved ? "Reinvest" : "Approve"}</Button>
+                    <Button variant="contained" onClick={() => { handleReInvestClick() }} className={isApproved ? classes.actionButton : classes.approveButton}>{isApproved ? "Reinvest" : "Approve"}</Button>
                 </Grid>
                 <Grid item md={6} xs={6} display="flex" >
-                    <Button variant="contained" onClick={() => { handleRedeemClick() }} className={isApproved ? classes.button : classes.approveButton}>{isApproved ? "Redeem" : "Approve"}</Button>
+                    <Button variant="contained" sx={{ '.MuiButton-label': {color: '#000000',fontSize: '14px'}}} onClick={() => { handleRedeemClick() }} className={classes.actionButton}>{isApproved ? "Redeem" : "Approve"}</Button>
                 </Grid>
             </Grid>
 
