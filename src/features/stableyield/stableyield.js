@@ -97,15 +97,12 @@ export default function StableYield() {
         fetchUserBalance({ web3 })
         fetchContractBalance({ web3 })
         fetchUserBonds({ web3 })
-        console.log("fethcing user blanace 1")
         fetchUserTokenReward({ web3 })
       }
     }
     getUserBalance()
   }, [web3, buyTokensPending, sellTokensPending]);
 
-  const chainNameLowercase = getNetworkFriendlyName().toLowerCase();
-  const activePoolCount = 0
   return (
     <Grid container className={classes.container} direction="column">
       {web3 ? (

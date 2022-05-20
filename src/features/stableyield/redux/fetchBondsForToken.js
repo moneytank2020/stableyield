@@ -15,7 +15,6 @@ export function fetchBondsForTokens(data) {
                 type: FETCH_BONDS_FOR_TOKEN_BEGIN,
                 data: { status: true }
             })
-            console.log("amount:",data.amount)
             var bonds = 0
             if(data.amount > 0){
                 bonds = await getBondsForTokens(data.web3, data.amount)

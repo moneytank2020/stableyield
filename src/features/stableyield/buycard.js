@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -23,7 +23,7 @@ export default function BuyCard() {
 
     
     const { t } = useTranslation();
-    const { web3, address } = useConnectWallet();
+    const { web3, } = useConnectWallet();
     const queryParams = new URLSearchParams(window.location.search);
     const [buySettings] = useState({
         amount:0,
@@ -31,9 +31,6 @@ export default function BuyCard() {
         referral:queryParams.get('ref')
     })
 
-    const [buttonSettings] = useState({
-        isDisabled:false
-    })
     const { fetchUserTokenRewardValue } = useFetchUserTokenReward({ web3 })
     const { fetchApproval, isApproved, fetchApprovalPending, fetchHasApprovedPending } = useFetchApproval({ web3 })
     const { fetchBondsForTokens, fetchBondsForTokensValue } = useFetchBondsForTokens({ buySettings })
@@ -70,7 +67,6 @@ export default function BuyCard() {
     }
 
     
-
     const handleAmountChange = async (amount) => {
         buySettings.amount = amount
         await fetchBondsForTokens(buySettings)
