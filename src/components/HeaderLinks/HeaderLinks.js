@@ -9,15 +9,17 @@ import Button from 'components/CustomButtons/Button.js';
 import { useTranslation } from 'react-i18next';
 import { LanguageDropdown } from '../LanguageDropdown/LanguageDropdown';
 import Davatar from '@davatar/react';
-
+import { ReactComponent as BNBLogo } from '../../images/bnbLogo.svg'
+import { ReactComponent as FTMLogo } from '../../images/ftmLogo.svg'
 import styles from './styles';
 import { useENS } from 'features/home/hooks/useENS';
+import { allNetworks } from 'network';
+import { ButtonBase, SvgIcon } from '@material-ui/core';
+import { useConnectWallet } from 'features/home/redux/connectWallet';
 
 const useStyles = makeStyles(styles);
 
 const HeaderLinks = ({
-  connected,
-  address,
   connectWallet,
   disconnectWallet,
   isNightMode,
@@ -26,8 +28,8 @@ const HeaderLinks = ({
   const classes = useStyles();
   const { t } = useTranslation();
   const [shortAddress, setShortAddress] = useState('');
+  const { web3, networkId, address, connected  } = useConnectWallet();
   const { ensName } = useENS(address);
-
   useEffect(() => {
     if (!connected) {
       return;
@@ -40,8 +42,60 @@ const HeaderLinks = ({
     }
   }, [address, connected]);
 
+  const changeToRightNetwork = async (chainId) => {
+    await window.ethereum.request({
+      method: 'wallet_switchEthereumChain',
+      params: [{ chainId: chainId }], // chainId must be in hexadecimal numbers
+    });
+  }
+
+  function getIcon(network){
+    switch(network){
+      case 'Binance':
+        return <BNBLogo/>
+      case 'Fantom':
+        return <FTMLogo/>
+    }
+
+  }
+
+  // const [network, setNetwork] = useState({
+  //   networkId: null
+  // })
+
+  // window.ethereum.on('networkChanged', function(networkId){
+  //   console.log('networkChanged',networkId);
+  //   setNetwork=>((prevState){
+
+  //   })
+  // });
+
+  function getLink(value){
+    if(networkId != value.id){
+      return ()=>{
+        changeToRightNetwork(value.chainId)
+      }
+    } else {
+      return null
+    }
+  }
+
+  const networks= []
+  allNetworks.forEach((value)=>{
+    networks.push(
+    <ListItem key={value.id} className={classes.listItem}>
+      <ButtonBase onClick={getLink(value)} focusRipple>
+        <SvgIcon className={networkId != value.id ? null : classes.largeIcon}>
+          {getIcon(value.name)}
+        </SvgIcon>
+        </ButtonBase>
+    </ListItem>
+    )
+  })
+
   return (
     <List className={classes.list + ' ' + classes.mlAuto}>
+      {networks}
       {/* <ListItem className={classes.listItem}>
         <LanguageDropdown navLinkClass={classes.navLink} />
       </ListItem> */}

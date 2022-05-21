@@ -40,6 +40,7 @@ function renderRouteConfigV3(routes, contextPath) {
     } else if (item.childRoutes) {
       item.childRoutes.forEach(r => renderRoute(r, newContextPath));
     }
+    console.log("children:",children)
   };
 
   routes.forEach(item => renderRoute(item, contextPath));
@@ -61,7 +62,7 @@ function Root() {
         <meta property="og:description" content={getPageMeta('App-Meta-Description')} />
         <meta property="og:url" content={process.env.PUBLIC_URL || 'https://compound.apx.finance'} />
       </Helmet>
-      <BrowserRouter><Switch>{children}</Switch></BrowserRouter>
+      <BrowserRouter>{children}</BrowserRouter>
     </Provider>
   );
 }

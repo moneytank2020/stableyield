@@ -45,16 +45,7 @@ export default function StableYield() {
     // return () => clearInterval(id);
   });
 
-  useEffect(() => {
-    if (window.ethereum != null) {
-      window.ethereum.on('accountsChanged', function (accounts) {
-        if (address && web3) {
-          fetchUserBalance({ web3 })
-          fetchUserBonds({ web3 })
-        }
-      })
-    }
-  }, [window.ethereum])
+
 
   useEffect(() => {
     const fetch = () => {

@@ -13,6 +13,10 @@ import { useConnectWallet, useDisconnectWallet } from './redux/hooks';
 import useNightMode from './hooks/useNightMode';
 import createThemeMode from './jss/appTheme';
 import { useLocation } from 'react-router';
+import { networkSettings } from 'common/networkSetup.js';
+import { allNetworks } from 'network.js';
+import { useFetchUserBalance } from 'features/stableyield/redux/fetchUserBalance.js';
+import { useFetchUserBonds } from 'features/stableyield/redux/fetchUserBonds.js';
 
 const themes = { dark: null, dark: null };
 const getTheme = mode => {
@@ -33,6 +37,8 @@ export default function App({ children }) {
   const { t } = useTranslation();
   const { connectWallet, web3, address, networkId, connected } = useConnectWallet();
   const { disconnectWallet } = useDisconnectWallet();
+  const { fetchUserBalance } = useFetchUserBalance({ web3 })
+  const { fetchUserBonds } = useFetchUserBonds({ web3 })
   const [web3Modal, setModal] = useState(null);
 
   const { isNightMode, setNightMode } = useNightMode();
@@ -47,18 +53,51 @@ export default function App({ children }) {
   }, [setModal, t]);
 
   useEffect(() => {
-    if (web3Modal && (web3Modal.cachedProvider || window.ethereum)) {
+    if (web3Modal && (web3Modal.cachedProvider || window.ethereum) && isSupportedNetwork.supported) {
+      console.log("test")
       connectWallet(web3Modal);
     }
   }, [web3Modal, connectWallet]);
 
+  const [isSupportedNetwork, setIsSupportNetwork] = useState({
+    supported:false
+  })
+
+  useEffect(() => {
+    console.log("netV:",window.ethereum.networkVersion)
+    if (window.ethereum != null) {
+      if (web3Modal && (web3Modal.cachedProvider || window.ethereum)){
+        connectWallet(web3Modal);
+      }
+      window.ethereum.on('accountsChanged', function (accounts) {
+        if (web3) {
+          fetchUserBalance({ web3 })
+          fetchUserBonds({ web3 })
+        }
+      })
+    }
+  }, [window.ethereum.networkVersion])
+
   const connectWalletCallback = useCallback(() => {
     connectWallet(web3Modal);
+    setIsSupportNetwork(prevState=>({
+      ...prevState,
+      supported: allNetworks.find(n => window.ethereum.chainId ==  n.id) != null
+    }))
+    
   }, [web3Modal, connectWallet]);
 
   const disconnectWalletCallback = useCallback(() => {
     disconnectWallet(web3, web3Modal);
   }, [web3, web3Modal, disconnectWallet]);
+
+
+  useEffect(()=>{
+    setIsSupportNetwork(prevState=>({
+      ...prevState,
+      supported: allNetworks.find(n => window.ethereum.chainId ==  n.id) != null
+    }))
+  },[window.ethereum.chainId])
 
   return (
     <StylesProvider injectFirst>
@@ -69,8 +108,6 @@ export default function App({ children }) {
             <Header
               links={
                 <HeaderLinks
-                  address={address}
-                  connected={connected}
                   connectWallet={connectWalletCallback}
                   disconnectWallet={disconnectWalletCallback}
                   isNightMode={isNightMode}
@@ -89,7 +126,8 @@ export default function App({ children }) {
                   disconnectWallet={disconnectWalletCallback}
                   networkId={networkId}
                 />
-                {networkId === window.REACT_APP_NETWORK_ID ? children : null}
+                {console.log("supported:",isSupportedNetwork.supported)}
+                {isSupportedNetwork.supported ? children : null}
                 <Notifier />
               </div>
             </div>

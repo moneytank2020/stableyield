@@ -32,7 +32,7 @@ const styles = theme => ({
     position: 'relative',
     display: 'block',
     width: 'auto',
-    margin: '0',
+    margin: '10px',
     padding: '0',
     [theme.breakpoints.down('sm')]: {
       '& ul': {
@@ -155,6 +155,14 @@ const styles = theme => ({
     width: '20px',
     height: '20px',
     marginRight: '14px',
+  },
+  largeIcon: {
+    width: 30,
+    height: 30,
+  },
+  smallIcon: {
+    width: 30,
+    height: 30,
   },
   dropdownIcons: {
     width: '24px',
