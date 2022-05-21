@@ -11,9 +11,8 @@ const APPEND_TITLE = ' | StableYield';
 
 // Defined here to avoid adding an entry to translation.json where not needed
 const PAGE_META = {
-  'App-Meta-Title': ({ networkName }) => appendTitle(`${networkName}`),
-  'Vault-Meta-Title': ({ vaultName, vaultDescription, networkName }) =>
-    appendTitle(`${vaultName} - ${vaultDescription} - ${networkName}`),
+  // 'App-Meta-Title': ({ networkName }) => appendTitle(`${networkName}`),
+    'App-Meta-Title': ({ }) => "StableYield",
   'App-Meta-Description': translate,
   'Stakes-Meta-Title': translateAppendTitle,
   'Stake-Meta-Title': translateAppendTitle,

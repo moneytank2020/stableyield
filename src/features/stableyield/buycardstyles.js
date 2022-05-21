@@ -34,7 +34,12 @@ const styles = theme => ({
     marginTop: 20,
     marginBottom: 20,
     fontWeight: 700,
+    color:'#fff',
     backgroundColor: "#11ad00",
+    '&:hover': {
+      backgroundColor: "#085200",
+      cursor: 'pointer',
+    },
     borderRadius: 100
   },
   buyButton:{
@@ -44,7 +49,11 @@ const styles = theme => ({
     borderRadius: 100,
     fontWeight: 700,
     color:'#fff',
-    backgroundColor: theme.palette.text.primary
+    backgroundColor: theme.palette.text.primary,
+    '&:hover': {
+      backgroundColor: theme.palette.background.border,
+      cursor: 'pointer',
+    },
   },
   rewardButton:{
     width: '100%',

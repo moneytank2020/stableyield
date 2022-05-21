@@ -6,6 +6,7 @@ export const allNetworks = [
     id: 250,
     chainId:'0xfa',
     hash: '/fantom',
+    rpxUrl:'https://rpc.ankr.com/fantom',
     image:'fantom-ftm-logo.svg'
   },
   // {
@@ -26,6 +27,7 @@ export const allNetworks = [
     id: 56,
     chainId:'0x38',
     hash: '/bnb',
+    rpxUrl:'https://bsc-dataseed.binance.org/',
     image:'bnb-bnb-logo.svg'
   },
 ];

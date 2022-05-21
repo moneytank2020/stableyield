@@ -28,7 +28,7 @@ const HeaderLinks = ({
   const classes = useStyles();
   const { t } = useTranslation();
   const [shortAddress, setShortAddress] = useState('');
-  const { web3, networkId, address, connected  } = useConnectWallet();
+  const { web3, networkId, address, connected } = useConnectWallet();
   const { ensName } = useENS(address);
   useEffect(() => {
     if (!connected) {
@@ -42,19 +42,34 @@ const HeaderLinks = ({
     }
   }, [address, connected]);
 
-  const changeToRightNetwork = async (chainId) => {
-    await window.ethereum.request({
-      method: 'wallet_switchEthereumChain',
-      params: [{ chainId: chainId }], // chainId must be in hexadecimal numbers
-    });
+  const changeToRightNetwork = async (value) => {
+    try {
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: value.chainId }], // chainId must be in hexadecimal numbers
+      });
+    } catch (error) {
+      // This error code indicates that the chain has not been added to MetaMask.
+      if (error.code === 4902) {
+        try {
+          await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [{ chainId: value.chainId, rpcUrl: value.rpcUrl }],
+          });
+        } catch (addError) {
+          // handle "add" error
+        }
+      }
+      // handle other "switch" errors
+    }
   }
 
-  function getIcon(network){
-    switch(network){
+  function getIcon(network) {
+    switch (network) {
       case 'Binance':
-        return <BNBLogo/>
+        return <BNBLogo />
       case 'Fantom':
-        return <FTMLogo/>
+        return <FTMLogo />
     }
 
   }
@@ -70,26 +85,26 @@ const HeaderLinks = ({
   //   })
   // });
 
-  function getLink(value){
-    if(networkId != value.id){
-      return ()=>{
-        changeToRightNetwork(value.chainId)
+  function getLink(value) {
+    if (networkId != value.id) {
+      return () => {
+        changeToRightNetwork(value)
       }
     } else {
       return null
     }
   }
 
-  const networks= []
-  allNetworks.forEach((value)=>{
+  const networks = []
+  allNetworks.forEach((value) => {
     networks.push(
-    <ListItem key={value.id} className={classes.listItem}>
-      <ButtonBase onClick={getLink(value)} focusRipple>
-        <SvgIcon className={networkId != value.id ? null : classes.largeIcon}>
-          {getIcon(value.name)}
-        </SvgIcon>
+      <ListItem key={value.id} className={classes.listItem}>
+        <ButtonBase onClick={getLink(value)} focusRipple>
+          <SvgIcon className={networkId != value.id ? null : classes.largeIcon}>
+            {getIcon(value.name)}
+          </SvgIcon>
         </ButtonBase>
-    </ListItem>
+      </ListItem>
     )
   })
 

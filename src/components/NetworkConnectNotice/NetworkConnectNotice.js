@@ -90,13 +90,22 @@ export function NetworkConnectNotice({
   }
 
   var isNetworkSupported = allNetworks.find(n => window.ethereum.chainId == n.id) == null
-  if (isNetworkSupported) {
+  if (isNetworkSupported && haveConnection) {
     notice = (
       <>
         <div className={classes.message}>
           {t('Network-Supports', { network: supportedNetworks() })}{' '}
         </div>
         <div className={classes.note}>{t('Network-SwitchNote')}</div>
+        {networkSetupError ? <div className={classes.error}>{networkSetupError}</div> : ''}
+      </>
+    );
+  }else if (!haveConnection){
+    notice = (
+      <>
+        <div className={classes.message}>
+          {t('Network-ConnectWallet')}{' '}
+        </div>
         {networkSetupError ? <div className={classes.error}>{networkSetupError}</div> : ''}
       </>
     );
