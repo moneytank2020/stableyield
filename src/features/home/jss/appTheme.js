@@ -29,7 +29,7 @@ const createThemeMode = isNightMode =>
         main: isNightMode ? '#fff' : '#1d1930',
       },
       text: {
-        primary: isNightMode ? `#075be8` : `#075be8`,
+        primary: isNightMode ? `#ffffff` : `#ffffff`,
         secondary: isNightMode ? '#B0B0DD' : '#00000066',
         flipped: isNightMode ? '#000' : '#fff',
       },
