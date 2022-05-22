@@ -279,6 +279,19 @@
   },
   {
     "inputs": [],
+    "name": "referralBonus",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "renounceOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -287,6 +300,19 @@
   {
     "inputs": [],
     "name": "sellTokens",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "refBonusVal",
+        "type": "uint256"
+      }
+    ],
+    "name": "setReferralBonus",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

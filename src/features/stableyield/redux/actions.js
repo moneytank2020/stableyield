@@ -9,4 +9,5 @@ export { fetchUserBonds } from './fetchUserBonds'
 export { fetchBondsForTokens } from './fetchBondsForToken'
 export { reInvestBonds } from './reinvestBonds'
 export { fetchUserTokenReward } from './fetchUserTokenRewards'
+export { fetchReferralBonus } from './fetchReferralBonus'
 

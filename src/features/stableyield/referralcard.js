@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import { useConnectWallet } from 'features/home/redux/hooks';
 import styles from './referralcardstyles';
 import { Box, Card, TextField, Typography } from '@material-ui/core';
+import { useFetchReferralBonus } from './redux/fetchReferralBonus';
 
 const useStyles = makeStyles(styles);
 
@@ -12,6 +13,7 @@ export default function ReferalCard() {
     const { t } = useTranslation();
     const classes = useStyles();
     const { web3, address } = useConnectWallet();
+    const { fetchReferralBonusValue } = useFetchReferralBonus({ web3 })
     const referalLink = `https://${window.location.host}?ref=${address}`
     return (
         <Card className={classes.cardContainer}>
@@ -24,7 +26,7 @@ export default function ReferalCard() {
                 <TextField style={{ fontSize: 18, width: '100%' }}  InputProps={{ disableUnderline: true, readOnly:true }} id="outlined-basic" value={referalLink}/>
             </Box>
             <Typography style={{ marginTop:10 }}>
-                Earn 12% of the USDC used to invest bonds from anyone who uses your referral link
+                {`Earn ${fetchReferralBonusValue} of the USDC used to invest bonds from anyone who uses your referral link`}
             </Typography>
         </Card>
     );

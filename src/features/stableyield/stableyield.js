@@ -20,6 +20,7 @@ import { useFetchUserTokenReward } from './redux/fetchUserTokenRewards';
 import { useSellTokens } from './redux/sellTokens';
 import BuyCard from './buycard';
 import InvestCard from './investcard';
+import { useFetchReferralBonus } from './redux/fetchReferralBonus';
 
 
 const FETCH_INTERVAL_MS = 15 * 1000;
@@ -31,6 +32,7 @@ export default function StableYield() {
   const { web3, address, networkId, connected } = useConnectWallet();
   const { fetchHasApproved, fetchHasApprovedPending, fetchNeedApproval } = useFetchApproval({ web3 })
   const { fetchContractBalance } = useFetchContractBalance({ web3 })
+  const { fetchReferralBonus } = useFetchReferralBonus({ web3 })
   const { fetchApyAndRate } = useFetchApyAndRate({ web3 })
   const { fetchTaxFee } = useFetchTaxFee({ web3 })
   const { fetchUserBalance } = useFetchUserBalance({ web3 })
@@ -89,6 +91,7 @@ export default function StableYield() {
         fetchContractBalance({ web3 })
         fetchUserBonds({ web3 })
         fetchUserTokenReward({ web3 })
+        fetchReferralBonus({ web3 })
       }
     }
     getUserBalance()

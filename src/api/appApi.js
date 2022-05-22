@@ -130,6 +130,12 @@ const getFees = async(web3)=>{
     return {taxFeeVal,charFeeVal}
 }
 
+const getReferralBonus = async(web3)=>{
+    const stableYieldContract = await getContract(web3)
+    var referralBonus = await stableYieldContract.referralBonus()
+    return `${Number(referralBonus)}%`
+}
+
 
 const getUserBonds = async(web3)=>{
     const stableYieldContract = await getContract(web3)
@@ -185,7 +191,8 @@ export{
     getUserBonds,
     getBondsForTokens,
     getUserTokensMinusFees,
-    getTokenReward
+    getTokenReward,
+    getReferralBonus
 }
 
 // const getRewardTokenBalance = async(web3) => {

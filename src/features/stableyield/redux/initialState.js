@@ -37,6 +37,9 @@
     fetchUserTokenRewardPending:false, 
     fetchUserTokenRewardError:"", 
     fetchUserTokenRewardValue:"0",
+    fetchReferralBonusPending: false, 
+    fetchReferralBonusError: "", 
+    fetchReferralBonusValue: "0%"
   }
 
   export default initialState;

@@ -10,6 +10,7 @@ import { reducer as fetchUserBondsReducer } from './fetchUserBonds'
 import { reducer as fetchBondsForTokenReducer } from './fetchBondsForToken'
 import { reducer as fetchUserTokenReward } from './fetchUserTokenRewards'
 import { reducer as reInvestBondsReducer } from './reinvestBonds'
+import { reducer as fetchReferralBonusReducer } from './fetchReferralBonus'
 
 const reducers = [
     buyTokensReducer,
@@ -22,7 +23,8 @@ const reducers = [
     fetchUserBondsReducer,
     fetchBondsForTokenReducer,
     reInvestBondsReducer,
-    fetchUserTokenReward
+    fetchUserTokenReward,
+    fetchReferralBonusReducer
 ]
 
 export default function reducer(state = initialState, action) {

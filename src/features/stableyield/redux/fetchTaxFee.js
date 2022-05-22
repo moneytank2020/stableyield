@@ -16,7 +16,6 @@ export function fetchTaxFee(data) {
                 data: { status: true }
             })
             var fees = await getFees(data.web3)
-            console.log("fees:", fees)
             dispatch({
                 type: FETCH_TAX_FEE_SUCCESS,
                 data: { status: false, fees: fees }
