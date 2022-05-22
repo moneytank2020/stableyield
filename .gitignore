@@ -28,3 +28,4 @@ README.md
 .netlify
 keys.json
 contracts/stableyield_test.sol
+yarn.lock
