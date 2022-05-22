@@ -32,7 +32,7 @@ const Header = ({ links }) => {
   };
 
   return (
-    <AppBar className={`${classes.appBar} ${classes.dark}`} position="relative">
+    <AppBar className={`${classes.appBar}`} position="relative">
       <Toolbar className={classes.container}>
         <img
             alt="stableyield"
