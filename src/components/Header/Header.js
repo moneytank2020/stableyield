@@ -43,7 +43,7 @@ const Header = ({ links }) => {
         <div className={classes.middleNav}>
           <Hidden smDown>
             {renderLink('Telegram', t('Telegram'), '', classes)}
-            {renderLink('Support', t('Support'), '', classes)}
+            {renderLink('Knowledge Base', t('Knowledge Base'), '', classes)}
           </Hidden>
         </div>
 
@@ -85,7 +85,7 @@ const Header = ({ links }) => {
               {renderLink('Telegram', t('Telegram'), '', classes)}
           </div>
           <div style={{ marginTop: '10px' }} className={classes.middleNav}>
-            {renderLink('Support', t('Support'), '', classes)}
+            {renderLink('Knowledge Base', t('Knowledge Base'), '', classes)}
           </div>
         </Drawer>
       </Hidden>
@@ -117,9 +117,9 @@ const getLinkUrl = name => {
   if (name === 'buy'){
     return getNetworkBuyUrl()
   } else if (name === 'Telegram'){
-    return `https://Telegram.gg/PUTnJq7bUD`
+    return `https://t.me/stableyieldio`
   } else {
-    return `https://${name}.apx.finance`
+    return `https://stableyield2020.gitbook.io/stableyield-knowledge-base/`
   };
 };
 

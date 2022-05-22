@@ -105,7 +105,7 @@ export default function BuyCard() {
             <Grid container direction="row">
                 <Grid item md={6} xs={6}>
                     <Typography className={classes.text}>
-                        Wallet
+                        Available in Wallet
                     </Typography>
                 </Grid>
                 <Grid item md={6} xs={6} display="flex" >
@@ -153,7 +153,7 @@ export default function BuyCard() {
                     {parseInt(fetchBondsForTokensValue) > 0 ? `You receive: ${fetchBondsForTokensValue} BONDS` : ""}
                 </Typography>
             </Grid>
-            <Button variant="contained" onClick={() => { handleClick() }} disabled={ isButtonDisabled() ? true : false } className={isApproved ? classes.buyButton : classes.approveButton}>{isApproved ? "BUY" : "APPROVE"}</Button>
+            <Button variant="contained" onClick={() => { handleClick() }} disabled={ isButtonDisabled() ? true : false } className={isApproved ? classes.buyButton : classes.approveButton}>{isApproved ? "BUY BONDS" : "APPROVE"}</Button>
             <Divider className={classes.divider} />
             <Grid container direction="row">
                 <Grid item md={6} xs={6}>

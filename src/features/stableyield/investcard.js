@@ -23,7 +23,7 @@ export default function InvestCard(){
     return (
         <Card className={classes.cardContainer}>
              <Typography className={classes.text}>
-                 Investment Plan
+                 Investment Plan 🚀
             </Typography>
             <Grid container direction="row">
                 <Grid item md={6} xs={6}>
@@ -70,7 +70,7 @@ export default function InvestCard(){
             <Grid container direction="row">
                 <Grid item md={6} xs={6}>
                     <Typography cstyle={{ fontSize: 18 }}>
-                    Development Fee
+                    DAO Fee
                     </Typography>
                 </Grid>
                 <Grid item md={6} xs={6} display="flex" >
