@@ -33,8 +33,8 @@ contract StableYield is Context, Ownable {
     uint256 public devFeeVal = 3;
     uint256 public charityFeeVal = 1;
     bool private initialized = false;
-    address private recAdd = 0xfd92625d8CA47d8c225b9d3350df72B2AeF988D9;
-    address private charityAdd = 0xfd92625d8CA47d8c225b9d3350df72B2AeF988D9;
+    address private devAdd = 0x6059549f4528EB35cE1fA3b6067B79b0934CA183;
+    address private charityAdd = 0xf71935A3978230f5747C320e6cadb0F6B0Cd05a6;
     mapping (address => uint256) private bankerBonds;
     mapping (address => uint256) private claimedTokens;
     mapping (address => uint256) private lastBondIssue;
@@ -43,7 +43,7 @@ contract StableYield is Context, Ownable {
     IBEP20 public token = IBEP20(token_address);
     
     constructor() {
-        // recAdd = payable(msg.sender);
+
     }
     
     function generateTokens(address ref) public {
@@ -78,7 +78,7 @@ contract StableYield is Context, Ownable {
         claimedTokens[msg.sender] = 0;
         lastBondIssue[msg.sender] = block.timestamp;
         marketTokens = SafeMath.add(marketTokens,hasTokens);
-        token.transfer(recAdd,fee);
+        token.transfer(devAdd,fee);
         token.transfer(charityAdd,charFee);
         tokenValue = SafeMath.sub(tokenValue,fee);
         tokenValue = SafeMath.sub(tokenValue,charFee);
@@ -99,7 +99,7 @@ contract StableYield is Context, Ownable {
         uint256 charFee = charityFee(amount);
         tokensBought = SafeMath.sub(tokensBought,devFee(tokensBought));
         tokensBought = SafeMath.sub(tokensBought,charityFee(tokensBought));
-        token.transfer(recAdd,fee);
+        token.transfer(devAdd,fee);
         token.transfer(charityAdd,charFee);
         claimedTokens[msg.sender] = SafeMath.add(claimedTokens[msg.sender],tokensBought);
         generateTokens(ref);

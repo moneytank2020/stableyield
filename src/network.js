@@ -1,14 +1,14 @@
 /* eslint-disable import/first */
 export const allNetworks = [
-  {
-    name: 'Fantom',
-    asset: 'FANTOM',
-    id: 250,
-    chainId:'0xfa',
-    hash: '/fantom',
-    rpxUrl:'https://rpc.ankr.com/fantom',
-    image:'fantom-ftm-logo.svg'
-  },
+  // {
+  //   name: 'Fantom',
+  //   asset: 'FANTOM',
+  //   id: 250,
+  //   chainId:'0xfa',
+  //   hash: '/fantom',
+  //   rpxUrl:'https://rpc.ankr.com/fantom',
+  //   image:'fantom-ftm-logo.svg'
+  // },
   // {
   //   name: 'Binance',
   //   asset: 'BNB',
