@@ -38,7 +38,7 @@ const styles = theme => ({
     borderRadius: 100,
     fontWeight: 700,
     color:'#fff',
-    backgroundColor: theme.palette.text.primary
+    backgroundColor: '#95a8c9'
   },
   buyButton:{
     width: '100%',
