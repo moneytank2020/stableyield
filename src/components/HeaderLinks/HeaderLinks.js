@@ -113,7 +113,6 @@ const HeaderLinks = ({
       {/* <ListItem className={classes.listItem}>
         <LanguageDropdown navLinkClass={classes.navLink} />
       </ListItem> */}
-      {console.log("connected:",connected)}
       <ListItem className={classes.listItem}>
         <Button
           disableElevation
