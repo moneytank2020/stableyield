@@ -238,7 +238,7 @@ const styles = theme => ({
       textDecoration: 'underline',
     },
     '& span': {
-      color: theme.palette.text.primary,
+      color: '#FFFFFF',
     },
   },
   icon: {
