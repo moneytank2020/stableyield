@@ -10,6 +10,7 @@ import {
 } from './constants';
 import { disconnectWallet } from './actions';
 import { Provider } from 'web3modal';
+import { allNetworks } from 'network';
 
 export function connectWallet(web3Modal) {
   return async dispatch => {
@@ -47,7 +48,8 @@ export function connectWallet(web3Modal) {
         });
         provider.on('chainChanged', async chainId => {
           const networkId = web3.utils.isHex(chainId) ? web3.utils.hexToNumber(chainId) : chainId;
-          dispatch({ type: HOME_NETWORK_CHANGED, data: networkId });
+          const contractAddress = allNetworks.find(n => n.id == networkId).contractAddress
+          dispatch({ type: HOME_NETWORK_CHANGED, data: {networkId, contractAddress }});
         });
       };
       subscribeProvider(provider);
@@ -59,8 +61,8 @@ export function connectWallet(web3Modal) {
         // Trust provider returns an incorrect chainId for BSC.
         networkId = 56;
       }
-
-      dispatch({ type: HOME_CONNECT_WALLET_SUCCESS, data: { web3, address, networkId } });
+      const contractAddress = allNetworks.find(n => n.id == networkId).contractAddress
+      dispatch({ type: HOME_CONNECT_WALLET_SUCCESS, data: { web3, address, contractAddress, networkId } });
     } catch (error) {
       console.error(error);
       dispatch({ type: HOME_CONNECT_WALLET_FAILURE });
@@ -70,11 +72,12 @@ export function connectWallet(web3Modal) {
 
 export function useConnectWallet() {
   const dispatch = useDispatch();
-  const { web3, address, networkId, connected, connectWalletPending } = useSelector(
+  const { web3, address, networkId, contractAddress, connected, connectWalletPending } = useSelector(
     state => ({
       web3: state.home.web3,
       address: state.home.address,
       networkId: state.home.networkId,
+      contractAddress: state.home.contractAddress,
       connected: state.home.connected,
       connectWalletPending: state.home.connectWalletPending,
     }),
@@ -82,7 +85,7 @@ export function useConnectWallet() {
   );
   const boundAction = useCallback(data => dispatch(connectWallet(data)), [dispatch]);
 
-  return { web3, address, networkId, connected, connectWalletPending, connectWallet: boundAction };
+  return { web3, address, networkId, contractAddress, connected, connectWalletPending, connectWallet: boundAction };
 }
 
 export function reducer(state, action) {
@@ -99,6 +102,7 @@ export function reducer(state, action) {
         web3: action.data.web3,
         address: process.env.ACCOUNT ? process.env.ACCOUNT : action.data.address,
         networkId: action.data.networkId,
+        contractAddress: action.data.contractAddress,
         connected: true,
         connectWalletPending: false,
       };
@@ -106,7 +110,8 @@ export function reducer(state, action) {
     case HOME_NETWORK_CHANGED:
       return {
         ...state,
-        networkId: action.data,
+        networkId: action.data.networkId,
+        contractAddress: action.data.contractAddress
       };
 
     case HOME_ACCOUNTS_CHANGED:

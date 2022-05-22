@@ -28,7 +28,8 @@ export const allNetworks = [
     chainId:'0x38',
     hash: '/bnb',
     rpxUrl:'https://bsc-dataseed.binance.org/',
-    image:'bnb-bnb-logo.svg'
+    image:'bnb-bnb-logo.svg',
+    contractAddress:""
   },
 ];
 

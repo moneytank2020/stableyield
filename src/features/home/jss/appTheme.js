@@ -10,7 +10,7 @@ const createThemeMode = isNightMode =>
       },
       type: isNightMode ? 'dark' : 'light',
       background: {
-        default: isNightMode ? '#FFFFFFFF' : '#FFFFFFFF',
+        default: isNightMode ? '##075be8' : '##075be8',
         paper: isNightMode ? '#FFFFFFFF' : '#FFFFFFFF',
         primary: isNightMode ? '#1d1930' : '#1d1930',
         secondary: isNightMode ? '#3B3A4D' : '#1d1930',
