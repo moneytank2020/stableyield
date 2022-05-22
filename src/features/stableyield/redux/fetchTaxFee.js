@@ -7,6 +7,7 @@ import {
 } from './constants'
 
 import { getFees } from '../../../api/appApi'
+import { contractAddress } from 'network';
 
 export function fetchTaxFee(data) {
     return async dispatch => {
@@ -15,7 +16,8 @@ export function fetchTaxFee(data) {
                 type: FETCH_TAX_FEE_BEGIN,
                 data: { status: true }
             })
-            var fees = await getFees(data.web3)
+            const contract = contractAddress(data.web3.currentProvider.networkVersion)
+            var fees = await getFees(data.web3,contract)
             dispatch({
                 type: FETCH_TAX_FEE_SUCCESS,
                 data: { status: false, fees: fees }

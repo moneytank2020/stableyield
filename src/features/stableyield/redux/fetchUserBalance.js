@@ -7,6 +7,7 @@ import {
 } from './constants'
 
 import { getUserTokenBalance } from '../../../api/appApi'
+import { contractAddress } from 'network';
 
 export function fetchUserBalance(data) {
     return async dispatch => {
@@ -15,7 +16,8 @@ export function fetchUserBalance(data) {
                 type: FETCH_USER_BALANCE_BEGIN,
                 data: { status: true }
             })
-            var balance = await getUserTokenBalance(data.web3)
+            const contract = contractAddress(data.web3.currentProvider.networkVersion)
+            var balance = await getUserTokenBalance(data.web3,contract)
             dispatch({
                 type: FETCH_USER_BALANCE_SUCCESS,
                 data: { status: false, balance: balance}

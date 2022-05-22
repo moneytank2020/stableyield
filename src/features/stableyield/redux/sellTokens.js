@@ -7,6 +7,7 @@ import {
 } from './constants'
 
 import { sellTokensForUser } from '../../../api/appApi'
+import { contractAddress } from 'network';
 
 export function sellTokens(data) {
     return async dispatch => {
@@ -15,7 +16,8 @@ export function sellTokens(data) {
                 type: SELL_TOKENS_BEGIN,
                 data: { status: true }
             })
-            await sellTokensForUser(data.web3)
+            const contract = contractAddress(data.web3.currentProvider.networkVersion)
+            await sellTokensForUser(data.web3,contract)
             dispatch({
                 type: SELL_TOKENS_SUCCESS,
                 data: { status: false }

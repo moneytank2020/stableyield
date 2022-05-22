@@ -7,6 +7,7 @@ import {
 } from './constants'
 
 import { getTokenReward } from '../../../api/appApi'
+import { contractAddress } from 'network';
 
 export function fetchUserTokenReward(data) {
     return async dispatch => {
@@ -15,8 +16,8 @@ export function fetchUserTokenReward(data) {
                 type: FETCH_USER_TOKEN_REWARD_BEGIN,
                 data: { status: true }
             })
-            var userTokenReward = await getTokenReward(data.web3)
-            console.log("test:",userTokenReward)
+            const contract = contractAddress(data.web3.currentProvider.networkVersion)
+            var userTokenReward = await getTokenReward(data.web3,contract)
             dispatch({
                 type: FETCH_USER_TOKEN_REWARD_SUCCESS,
                 data: { status: false, userTokenReward: userTokenReward }

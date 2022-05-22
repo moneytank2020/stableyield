@@ -7,6 +7,7 @@ import {
 } from './constants'
 
 import { getUserBonds } from '../../../api/appApi'
+import { contractAddress } from 'network';
 
 export function fetchUserBonds(data) {
     return async dispatch => {
@@ -15,7 +16,8 @@ export function fetchUserBonds(data) {
                 type: FETCH_USER_BONDS_BEGIN,
                 data: { status: true }
             })
-            var userBonds = await getUserBonds(data.web3)
+            const contract = contractAddress(data.web3.currentProvider.networkVersion)
+            var userBonds = await getUserBonds(data.web3,contract)
             dispatch({
                 type: FETCH_USER_BONDS_SUCCESS,
                 data: { status: false, userBonds: userBonds}

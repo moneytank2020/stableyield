@@ -37,9 +37,9 @@ const getSigner = async(web3) =>{
 }
 
 
-const getContract = async(web3) =>{
+const getContract = async(web3, contractAddress) =>{
     const signer = await getSigner(web3)
-    const stableYieldContract = await new ethers.Contract(constants.stableYieldContract,stableYieldAbi,signer)
+    const stableYieldContract = await new ethers.Contract(contractAddress,stableYieldAbi,signer)
     return stableYieldContract
 }
 
@@ -49,71 +49,67 @@ const getUserAddress = async(web3) =>{
     return address
 }
 
-const getTokenContact = async(web3) =>{
-    const stableYieldContract = await getContract(web3)
+const getTokenContact = async(web3,contractAddress) =>{
+    const stableYieldContract = await getContract(web3,contractAddress)
     const tokenAddress = await stableYieldContract.token_address()
     const tokenContract = new ethers.Contract(tokenAddress, usdcAbi, await getSigner(web3));
     return tokenContract
 }
 
-const buyTokensForUser = async(web3, amount, referral) =>{
+const buyTokensForUser = async(web3, amount, referral, contractAddress) =>{
     let ref = referral
     
     if(!ethers.utils.isAddress(referral)){
-        const address = await getUserAddress(web3)
+        const address = await getUserAddress(web3,)
         ref = address
     }
-    const stableYieldContract = await getContract(web3)
+    const stableYieldContract = await getContract(web3,contractAddress)
     const tx = await stableYieldContract.buyTokens(ethers.utils.parseEther(amount), ref)
     await tx.wait()
 }
 
-const sellTokensForUser = async(web3) => {
-    const stableYieldContract = await getContract(web3)
+const sellTokensForUser = async(web3,contractAddress) => {
+    const stableYieldContract = await getContract(web3,contractAddress)
     const tx = await stableYieldContract.sellTokens()
     await tx.wait()
 }
 
-const getTokenReward = async(web3) =>{
-    const stableYieldContract = await getContract(web3)
+const getTokenReward = async(web3,contractAddress) =>{
+    const stableYieldContract = await getContract(web3,contractAddress)
     const address = await getUserAddress(web3)
-    console.log("address:",address)
-    const rewards2 = await stableYieldContract.getMyTokens(address)
-    console.log("reward2:",rewards2)
     const rewards = await stableYieldContract.tokenRewards(address)
-    console.log("reward:",rewards)
     return `${Number(ethers.utils.formatEther(rewards.toString())).toFixed(3)}`
 }
 
-const getUserTokenBalance = async(web3) =>{
-    const token = await getTokenContact(web3)
+const getUserTokenBalance = async(web3,contractAddress) =>{
+    const token = await getTokenContact(web3,contractAddress)
     const signer = await getSigner(web3)
     const userAddress = await signer.getAddress();
     var balance = await token.balanceOf(userAddress)
     return Number(ethers.utils.formatEther(balance.toString())).toFixed(3)
 }
 
-const getUserTokensMinusFees = async(web3) => {
-    const contract = await getContract(web3)
+const getUserTokensMinusFees = async(web3,contractAddress) => {
+    const contract = await getContract(web3,contractAddress)
     const userContractTokenBalance = await contract.calculateSellPriceMinusFee()
     return ethers.utils.formatEther(userContractTokenBalance)
 }
 
-const getBondsForTokens = async(web3, amount) =>{
-    const contract = await getContract(web3)
+const getBondsForTokens = async(web3, amount,contractAddress) =>{
+    const contract = await getContract(web3,contractAddress)
     const bondsForTokens = await contract.calculateBuyMinusFee(ethers.utils.parseEther(amount))
     return Number(bondsForTokens)
 }
 
-const getContractTokenBalance = async(web3) =>{
-    const contract = await getContract(web3)
+const getContractTokenBalance = async(web3,contractAddress) =>{
+    const contract = await getContract(web3,contractAddress)
     var balance = await contract.getBalance()
     return Number(ethers.utils.formatEther(balance.toString())).toFixed(3)
 }
 
 
-const getApyAndRate = async(web3)=>{
-    const stableYieldContract = await getContract(web3)
+const getApyAndRate = async(web3,contractAddress)=>{
+    const stableYieldContract = await getContract(web3,contractAddress)
     var amount = await stableYieldContract.TOKENS_TO_GENERATE_1BOND()
     var rate = 86400/amount
     var apy = `${((rate*365)*100).toFixed()}%`
@@ -121,8 +117,8 @@ const getApyAndRate = async(web3)=>{
     return {apy,rate:stringRate}
 }
 
-const getFees = async(web3)=>{
-    const stableYieldContract = await getContract(web3)
+const getFees = async(web3,contractAddress)=>{
+    const stableYieldContract = await getContract(web3,contractAddress)
     var tax = await stableYieldContract.devFeeVal()
     var charFee = await stableYieldContract.charityFeeVal()
     var taxFeeVal = Number(tax)
@@ -130,28 +126,28 @@ const getFees = async(web3)=>{
     return {taxFeeVal,charFeeVal}
 }
 
-const getReferralBonus = async(web3)=>{
-    const stableYieldContract = await getContract(web3)
+const getReferralBonus = async(web3,contractAddress)=>{
+    const stableYieldContract = await getContract(web3,contractAddress)
     var referralBonus = await stableYieldContract.referralBonus()
     return `${Number(referralBonus)}%`
 }
 
 
-const getUserBonds = async(web3)=>{
-    const stableYieldContract = await getContract(web3)
+const getUserBonds = async(web3,contractAddress)=>{
+    const stableYieldContract = await getContract(web3,contractAddress)
     const signer = await getSigner(web3)
     const userAddress = await signer.getAddress();
     var bonds = await stableYieldContract.getMyBonds(userAddress)
     return `${bonds}`
 }
 
-const reInvestUserBonds = async(web3,referral) => {
+const reInvestUserBonds = async(web3,referral,contractAddress) => {
     let ref = referral
     if(!ethers.utils.isAddress(referral)){
         const address = await getUserAddress(web3)
         ref = address
     }
-    const stableYieldContract = await getContract(web3)
+    const stableYieldContract = await getContract(web3,contractAddress)
     await stableYieldContract.generateTokens(ref)
 }
 
@@ -169,8 +165,8 @@ const approve = async(web3) =>{
     }
 }
 
-const hasApproved = async(web3)=>{
-    const token = await getTokenContact(web3)
+const hasApproved = async(web3,contractAddress)=>{
+    const token = await getTokenContact(web3,contractAddress)
     const signer = await getSigner(web3)
     const userAddress = await signer.getAddress();
     const allowance = await token.allowance(userAddress, constants.stableYieldContract);

@@ -7,6 +7,7 @@ import {
 } from './constants'
 
 import { getReferralBonus } from '../../../api/appApi'
+import { contractAddress } from 'network';
 
 export function fetchReferralBonus(data) {
     return async dispatch => {
@@ -15,7 +16,9 @@ export function fetchReferralBonus(data) {
                 type: FETCH_REFERRAL_BONUS_BEGIN,
                 data: { status: true }
             })
-            var bonus = await getReferralBonus(data.web3)
+            const contract = contractAddress(data.web3.currentProvider.networkVersion)
+
+            var bonus = await getReferralBonus(data.web3,contract)
             dispatch({
                 type: FETCH_REFERRAL_BONUS_SUCCESS,
                 data: { status: false, bonus: bonus}

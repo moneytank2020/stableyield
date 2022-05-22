@@ -5,6 +5,7 @@ import {
     FETCH_APY_AND_RATE_SUCCESS,
     FETCH_APY_AND_RATE_FAILURE
 } from './constants'
+import { contractAddress } from 'network';
 
 import { getApyAndRate } from '../../../api/appApi'
 
@@ -15,7 +16,8 @@ export function fetchApyAndRate(data) {
                 type: FETCH_APY_AND_RATE_BEGIN,
                 data: { status: true }
             })
-            var getRatesAndApr = await getApyAndRate(data.web3)
+            const contract= contractAddress(data.web3.currentProvider.networkVersion)
+            var getRatesAndApr = await getApyAndRate(data.web3,contract)
             dispatch({
                 type: FETCH_APY_AND_RATE_SUCCESS,
                 data: { status: false, apyAndRate: getRatesAndApr}

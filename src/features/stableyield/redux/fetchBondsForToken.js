@@ -7,6 +7,7 @@ import {
 } from './constants'
 
 import { getBondsForTokens } from '../../../api/appApi'
+import { contractAddress } from 'network';
 
 export function fetchBondsForTokens(data) {
     return async dispatch => {
@@ -17,7 +18,8 @@ export function fetchBondsForTokens(data) {
             })
             var bonds = 0
             if(data.amount > 0){
-                bonds = await getBondsForTokens(data.web3, data.amount)
+                const contract = contractAddress(data.web3.currentProvider.networkVersion)
+                bonds = await getBondsForTokens(data.web3, data.amount, contract)
             }
             dispatch({
                 type: FETCH_BONDS_FOR_TOKEN_SUCCESS,

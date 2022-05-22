@@ -19,7 +19,6 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./IBEP20.sol";
-import "hardhat/console.sol";
 
 pragma solidity ^0.8.9;
 
@@ -30,7 +29,7 @@ contract StableYield is Context, Ownable {
     address public token_address = 0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d;
     uint256 private PSN = 10000;
     uint256 private PSNH = 5000;
-    uint256 public devFeeVal = 3;
+    uint256 public devFeeVal = 5;
     uint256 public charityFeeVal = 1;
     uint256 public referralBonus = 12;
     bool private initialized = false;
@@ -57,7 +56,6 @@ contract StableYield is Context, Ownable {
         if(referrals[msg.sender] == address(0) && referrals[msg.sender] != msg.sender) {
             referrals[msg.sender] = ref;
         }
-        
         uint256 tokensUsed = getMyTokens(msg.sender);
         uint256 newBonds = SafeMath.div(tokensUsed,TOKENS_TO_GENERATE_1BOND);
         bankerBonds[msg.sender] = SafeMath.add(bankerBonds[msg.sender],newBonds);

@@ -7,6 +7,7 @@ import {
 } from './constants'
 
 import { reInvestUserBonds } from '../../../api/appApi'
+import { contractAddress } from 'network';
 
 export function reInvestBonds(data) {
     return async dispatch => {
@@ -15,7 +16,9 @@ export function reInvestBonds(data) {
                 type: REINVEST_BONDS_BEGIN,
                 data: { status: true }
             })
-            await reInvestUserBonds(data.web3, data.referral)
+            const contract = contractAddress(data.web3.currentProvider.networkVersion)
+
+            await reInvestUserBonds(data.web3, data.referral,contract)
             dispatch({
                 type: REINVEST_BONDS_SUCCESS,
                 data: { status: false }

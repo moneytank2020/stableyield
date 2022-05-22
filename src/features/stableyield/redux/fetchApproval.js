@@ -10,6 +10,8 @@ import {
 } from './constants'
 
 import { hasApproved, approve } from '../../../api/appApi';
+import { contractAddress } from 'network';
+
 
 export function fetchApproval(data) {
     return async dispatch => {
@@ -18,7 +20,8 @@ export function fetchApproval(data) {
                 type: FETCH_APPROVAL_BEGIN,
                 data: { status: true }
             })
-            await approve(data.web3)
+            const contract = contractAddress(data.web3.currentProvider.networkVersion)
+            await approve(data.web3,contract)
             dispatch({
                 type: FETCH_APPROVAL_SUCCESS,
                 data: { status: false, hasApproved: true }

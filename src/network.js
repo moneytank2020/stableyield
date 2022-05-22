@@ -29,9 +29,12 @@ export const allNetworks = [
     hash: '/bnb',
     rpxUrl:'https://bsc-dataseed.binance.org/',
     image:'bnb-bnb-logo.svg',
-    contractAddress:""
+    contractAddress:"0x86B254F65925C372C3fe8479ec423BF55f9ebE0c"
   },
 ];
+
+export const contractAddress = (networkId) =>{
+  return allNetworks.find(n => n.id == networkId).contractAddress}
 
 const network = allNetworks[0]
 
