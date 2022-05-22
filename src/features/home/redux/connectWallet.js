@@ -48,7 +48,6 @@ export function connectWallet(web3Modal) {
         });
         provider.on('chainChanged', async chainId => {
           const networkId = web3.utils.isHex(chainId) ? web3.utils.hexToNumber(chainId) : chainId;
-          const contractAddress = allNetworks.find(n => n.id == networkId).contractAddress
           dispatch({ type: HOME_NETWORK_CHANGED, data: {networkId, contractAddress }});
         });
       };

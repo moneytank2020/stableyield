@@ -34,7 +34,9 @@ export const allNetworks = [
 ];
 
 export const contractAddress = (networkId) =>{
-  return allNetworks.find(n => n.id == networkId).contractAddress}
+  const contractAddress = allNetworks.find(n => n.id == networkId).contractAddress
+  return contractAddress ? contractAddress: ""
+}
 
 const network = allNetworks[0]
 
