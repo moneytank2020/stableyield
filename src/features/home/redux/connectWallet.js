@@ -9,6 +9,7 @@ import {
   HOME_NETWORK_CHANGED,
 } from './constants';
 import { disconnectWallet } from './actions';
+import { Provider } from 'web3modal';
 
 export function connectWallet(web3Modal) {
   return async dispatch => {
@@ -16,6 +17,7 @@ export function connectWallet(web3Modal) {
     try {
       const provider = await web3Modal.connect();
       const web3 = new Web3(provider);
+
       web3.eth.extend({
         methods: [
           {
@@ -34,6 +36,7 @@ export function connectWallet(web3Modal) {
         });
         provider.on('disconnect', async () => {
           dispatch(disconnectWallet(web3, web3Modal));
+          
         });
         provider.on('accountsChanged', async accounts => {
           if (accounts[0]) {

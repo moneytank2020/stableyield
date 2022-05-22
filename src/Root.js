@@ -40,7 +40,6 @@ function renderRouteConfigV3(routes, contextPath) {
     } else if (item.childRoutes) {
       item.childRoutes.forEach(r => renderRoute(r, newContextPath));
     }
-    console.log("children:",children)
   };
 
   routes.forEach(item => renderRoute(item, contextPath));

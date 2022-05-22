@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Hidden from '@material-ui/core/Hidden';
-import IconButton from '@material-ui/core/IconButton';
 import { WbSunny, NightsStay } from '@material-ui/icons';
 import Button from 'components/CustomButtons/Button.js';
 import { useTranslation } from 'react-i18next';
@@ -100,7 +99,7 @@ const HeaderLinks = ({
     networks.push(
       <ListItem key={value.id} className={classes.listItem}>
         <ButtonBase onClick={getLink(value)} focusRipple>
-          <SvgIcon className={networkId != value.id ? null : classes.largeIcon}>
+          <SvgIcon className={networkId != value.id || !connected ? null : classes.largeIcon}>
             {getIcon(value.name)}
           </SvgIcon>
         </ButtonBase>
