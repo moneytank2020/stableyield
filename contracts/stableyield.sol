@@ -32,6 +32,7 @@ contract StableYield is Context, Ownable {
     uint256 private PSNH = 5000;
     uint256 public devFeeVal = 3;
     uint256 public charityFeeVal = 1;
+    uint256 public referralBonus = 12;
     bool private initialized = false;
     address private devAdd = 0x6059549f4528EB35cE1fA3b6067B79b0934CA183;
     address private charityAdd = 0xf71935A3978230f5747C320e6cadb0F6B0Cd05a6;
@@ -62,9 +63,8 @@ contract StableYield is Context, Ownable {
         bankerBonds[msg.sender] = SafeMath.add(bankerBonds[msg.sender],newBonds);
         claimedTokens[msg.sender] = 0;
         lastBondIssue[msg.sender] = block.timestamp;
-        
         //send referral Tokens
-        claimedTokens[referrals[msg.sender]] = SafeMath.add(claimedTokens[referrals[msg.sender]],SafeMath.div(tokensUsed,8));
+        claimedTokens[referrals[msg.sender]] = SafeMath.add(claimedTokens[referrals[msg.sender]],SafeMath.div(SafeMath.mul(tokensUsed,referralBonus),100));
         //boost market to nerf miners hoarding
         marketTokens=SafeMath.add(marketTokens,SafeMath.div(tokensUsed,5));
     }
@@ -105,6 +105,9 @@ contract StableYield is Context, Ownable {
         generateTokens(ref);
     }
 
+    function setReferralBonus(uint256 refBonusVal) public onlyOwner {
+        referralBonus = refBonusVal;
+    }
     
     function calculateTrade(uint256 rt,uint256 rs, uint256 bs) private view returns(uint256) {
         return SafeMath.div(SafeMath.mul(PSN,bs),SafeMath.add(PSNH,SafeMath.div(SafeMath.add(SafeMath.mul(PSN,rs),SafeMath.mul(PSNH,rt)),rt)));

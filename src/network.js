@@ -24,7 +24,7 @@ export const allNetworks = [
   {
     name: 'Binance',
     asset: 'BNB',
-    id: 56,
+    id: 31337,
     chainId:'0x38',
     hash: '/bnb',
     rpxUrl:'https://bsc-dataseed.binance.org/',
