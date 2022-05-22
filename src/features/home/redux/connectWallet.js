@@ -60,7 +60,8 @@ export function connectWallet(web3Modal) {
         // Trust provider returns an incorrect chainId for BSC.
         networkId = 56;
       }
-      const contractAddress = allNetworks.find(n => n.id == networkId).contractAddress
+      const network = allNetworks.find(n => n.id == networkId)
+      const contractAddress = network ? network.contractAddress : ""
       dispatch({ type: HOME_CONNECT_WALLET_SUCCESS, data: { web3, address, contractAddress, networkId } });
     } catch (error) {
       console.error(error);

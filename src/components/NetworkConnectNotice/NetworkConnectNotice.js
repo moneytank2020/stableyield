@@ -89,6 +89,8 @@ export function NetworkConnectNotice({
     return networks
   }
 
+  console.log("Web3:",web3)
+  console.log("haveConnection:",haveConnection)
   var isNetworkSupported = allNetworks.find(n => window.ethereum.chainId == n.id) == null
   if (isNetworkSupported && haveConnection) {
     notice = (
