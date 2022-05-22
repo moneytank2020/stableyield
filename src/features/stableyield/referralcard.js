@@ -17,7 +17,7 @@ export default function ReferalCard() {
         <Card className={classes.cardContainer}>
             <Grid item md={6} xs={6}>
                 <Typography className={classes.text}>
-                    Referral Link
+                    Referral Link 💰
                 </Typography>
             </Grid>
             <Box display="flex" className={classes.cardInputContainer} sx={{width:'100%', padding:10}}>

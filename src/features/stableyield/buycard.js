@@ -105,7 +105,7 @@ export default function BuyCard() {
             <Grid container direction="row">
                 <Grid item md={6} xs={6}>
                     <Typography className={classes.text}>
-                        Wallet
+                        Available in Wallet
                     </Typography>
                 </Grid>
                 <Grid item md={6} xs={6} display="flex" >

@@ -5,8 +5,10 @@ const styles = theme => ({
     paddingTop: '16px',
     padding: 20,
     borderRadius:10,
-    border: `1px solid #ecf0f8`,
-    marginTop: '20px'
+    border: `0px`,
+    marginTop: '20px',
+    boxShadow: '0 0 1px rgb(48 49 51 / 5%), 0 8px 16px rgb(48 49 51 / 10%) !important',
+    borderRadius: '12px 12px 12px 12px'
   },
   cardInputBox:{
     fontSize: 18,
@@ -33,9 +35,10 @@ const styles = theme => ({
     width: '100%',
     marginTop: 20,
     marginBottom: 20,
+    borderRadius: 100,
     fontWeight: 700,
-    backgroundColor: "#11ad00",
-    borderRadius: 100
+    color:'#fff',
+    backgroundColor: theme.palette.text.primary
   },
   buyButton:{
     width: '100%',

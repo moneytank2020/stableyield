@@ -110,6 +110,9 @@ export default function StableYield() {
           <Typography className={classes.title}>
             Deposit and Earn
           </Typography>
+          <Typography className={classes.valueText}>
+            Deposit USDC, buy bonds and earn daily rewards. The best investment protocol during bear markets.
+          </Typography>
           <Grid container direction="row" spacing={2}>
             <Grid item xs={12} md={6}>
               <Grid container direction="column">
