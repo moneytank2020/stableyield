@@ -43,7 +43,7 @@ const HeaderLinks = ({
 
   const changeToRightNetwork = async (value) => {
     try {
-      await window.ethereum.request({
+      await web3.currentProvider.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: value.chainId }], // chainId must be in hexadecimal numbers
       });
@@ -51,7 +51,7 @@ const HeaderLinks = ({
       // This error code indicates that the chain has not been added to MetaMask.
       if (error.code === 4902) {
         try {
-          await window.ethereum.request({
+          await web3.currentProvider.request({
             method: 'wallet_addEthereumChain',
             params: [{ chainId: value.chainId, rpcUrl: value.rpcUrl }],
           });

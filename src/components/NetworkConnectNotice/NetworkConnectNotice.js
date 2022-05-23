@@ -51,13 +51,6 @@ export function NetworkConnectNotice({
     window.location.reload();
   };
 
-  const changeToRightNetowk = async () => {
-    await window.ethereum.request({
-      method: 'wallet_switchEthereumChain',
-      params: [{ chainId: '0x61' }], // chainId must be in hexadecimal numbers
-    });
-  }
-
   // useEffect(() => {
   //   if (window.ethereum != null) {
   //     console.log()
