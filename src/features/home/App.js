@@ -62,17 +62,6 @@ export default function App({ children }) {
     return allNetworks.find(n => networkId ==  n.id) != null
   }
 
-  // useEffect(() => {
-  //   if (window.ethereum != null) {
-  //     window.ethereum.on('accountsChanged', function (accounts) {
-  //       if (web3) {
-  //         fetchUserBalance({ web3 })
-  //         fetchUserBonds({ web3 })
-  //       }
-  //     })
-  //   }
-  // }, [window.ethereum.networkVersion])
-
   const connectWalletCallback = useCallback(() => {
     connectWallet(web3Modal);
   }, [web3Modal, connectWallet]);
