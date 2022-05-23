@@ -106,7 +106,6 @@ export default function App({ children }) {
                   address={address}
                   connectWallet={connectWalletCallback}
                   disconnectWallet={disconnectWalletCallback}
-                  networkId={networkId}
                 />
                 {isSupportedNetwork() ? children : null}
                 <Notifier />

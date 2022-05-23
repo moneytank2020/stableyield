@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import styles from './styles';
 import { useTranslation } from 'react-i18next';
 import { allNetworks } from 'network';
+import { useConnectWallet } from 'features/home/redux/connectWallet';
 
 const useStyles = makeStyles(styles);
 const targetNetworkId = window.REACT_APP_NETWORK_ID;
@@ -13,11 +14,11 @@ const targetNetworkId = window.REACT_APP_NETWORK_ID;
 export function NetworkConnectNotice({
   web3,
   address,
-  networkId,
   connectWallet,
   disconnectWallet,
 }) {
   const [networkSetupError, setNetworkSetupError] = useState(null);
+  const { networkId } = useConnectWallet();
   const { t } = useTranslation();
   const haveConnection = !!web3;
   const haveAddress = !!address;
@@ -63,16 +64,16 @@ export function NetworkConnectNotice({
   //   }
   // }, [window.ethereum.networkVersion])
 
-  const supportedNetwork = useMemo(() => {
-    networkId = window.ethereum.chainId
-    return isSupportedNetwork
-      ? {
-        id: networkId,
-        url: getNetworkAppUrl(networkId),
-        name: getNetworkFriendlyName(networkId),
-      }
-      : null;
-  }, [window.ethereum.chainId]);
+  // const supportedNetwork = useMemo(() => {
+  //   networkId = window.ethereum.chainId
+  //   return isSupportedNetwork
+  //     ? {
+  //       id: networkId,
+  //       url: getNetworkAppUrl(networkId),
+  //       name: getNetworkFriendlyName(networkId),
+  //     }
+  //     : null;
+  // }, [window.ethereum.chainId]);
 
   
 
@@ -88,8 +89,8 @@ export function NetworkConnectNotice({
     })
     return networks
   }
-  var isNetworkSupported = allNetworks.find(n => window.ethereum.chainId == n.id) == null
-  if (isNetworkSupported && haveConnection) {
+  var isNetworkSupported = allNetworks.find(n => networkId == n.id) != null
+  if (!isNetworkSupported && haveConnection) {
     notice = (
       <>
         <div className={classes.message}>
@@ -107,7 +108,7 @@ export function NetworkConnectNotice({
         </div>
         {networkSetupError ? <div className={classes.error}>{networkSetupError}</div> : ''}
       </>
-    );
+    )
   }
   // if (!haveConnection) {
   // notice = (
