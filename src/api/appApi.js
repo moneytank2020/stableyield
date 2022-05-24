@@ -49,7 +49,7 @@ const getUserAddress = async(web3) =>{
     return address
 }
 
-const getTokenContact = async(web3,contractAddress) =>{
+const getTokenContract = async(web3,contractAddress) =>{
     const stableYieldContract = await getContract(web3,contractAddress)
     const tokenAddress = await stableYieldContract.token_address()
     const tokenContract = new ethers.Contract(tokenAddress, usdcAbi, await getSigner(web3));
@@ -82,7 +82,7 @@ const getTokenReward = async(web3,contractAddress) =>{
 }
 
 const getUserTokenBalance = async(web3,contractAddress) =>{
-    const token = await getTokenContact(web3,contractAddress)
+    const token = await getTokenContract(web3,contractAddress)
     const signer = await getSigner(web3)
     const userAddress = await signer.getAddress();
     var balance = await token.balanceOf(userAddress)
@@ -151,10 +151,10 @@ const reInvestUserBonds = async(web3,referral,contractAddress) => {
     await stableYieldContract.generateTokens(ref)
 }
 
-const approve = async(web3) =>{
+const approve = async(web3, contractAddress) =>{
     try {
-        const token = await getTokenContact(web3)
-        const tx = await token.approve(constants.stableYieldContract, ethers.constants.MaxInt256);
+        const token = await getTokenContract(web3,contractAddress)
+        const tx = await token.approve(contractAddress, ethers.constants.MaxInt256);
         const receipt = await tx.wait();
         if (receipt.status) {
             return true
@@ -166,10 +166,10 @@ const approve = async(web3) =>{
 }
 
 const hasApproved = async(web3,contractAddress)=>{
-    const token = await getTokenContact(web3,contractAddress)
+    const token = await getTokenContract(web3,contractAddress)
     const signer = await getSigner(web3)
     const userAddress = await signer.getAddress();
-    const allowance = await token.allowance(userAddress, constants.stableYieldContract);
+    const allowance = await token.allowance(userAddress, contractAddress);
     const isAllowed = Number(allowance) !== 0
     return isAllowed
 }
