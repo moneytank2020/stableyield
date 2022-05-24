@@ -71,7 +71,7 @@ export default function StableYield() {
       }
     }
     getApproval()
-  }, [web3]);
+  }, [web3,address]);
 
   useEffect(() => {
     const retrieveApyAndRateAndTax = () => {
@@ -95,7 +95,7 @@ export default function StableYield() {
       }
     }
     getUserBalance()
-  }, [web3, buyTokensPending, sellTokensPending]);
+  }, [web3,address, buyTokensPending, sellTokensPending]);
 
   return (
     <Grid container className={classes.container} direction="column">
