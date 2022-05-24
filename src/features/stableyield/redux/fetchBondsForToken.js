@@ -18,7 +18,10 @@ export function fetchBondsForTokens(data) {
             })
             var bonds = 0
             if(data.amount > 0){
-                const contract = contractAddress(data.web3.currentProvider.networkVersion)
+                let web3 = data.web3
+                let chainId = web3.currentProvider.chainId
+                let networkId = web3.utils.isHex(chainId) ? web3.utils.hexToNumber(chainId) : chainId;
+                const contract = contractAddress(networkId)
                 bonds = await getBondsForTokens(data.web3, data.amount, contract)
             }
             dispatch({

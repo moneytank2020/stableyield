@@ -20,7 +20,10 @@ export function fetchApproval(data) {
                 type: FETCH_APPROVAL_BEGIN,
                 data: { status: true }
             })
-            const contract = contractAddress(data.web3.currentProvider.networkVersion)
+            let web3 = data.web3
+            let chainId = web3.currentProvider.chainId
+            let networkId = web3.utils.isHex(chainId) ? web3.utils.hexToNumber(chainId) : chainId;
+            const contract = contractAddress(networkId)
             await approve(data.web3,contract)
             dispatch({
                 type: FETCH_APPROVAL_SUCCESS,

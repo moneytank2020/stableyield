@@ -152,7 +152,6 @@ const reInvestUserBonds = async(web3,referral,contractAddress) => {
 }
 
 const approve = async(web3, contractAddress) =>{
-    console.log("contractAddress:",contractAddress)
     try {
         const token = await getTokenContract(web3,contractAddress)
         const tx = await token.approve(contractAddress, ethers.constants.MaxInt256);

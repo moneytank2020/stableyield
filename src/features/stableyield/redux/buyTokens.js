@@ -16,7 +16,10 @@ export function buyTokens(data) {
                 type: BUY_TOKENS_BEGIN,
                 data: { status: true }
             })
-            const contract = contractAddress(data.web3.currentProvider.networkVersion)
+            let web3 = data.web3
+            let chainId = web3.currentProvider.chainId
+            let networkId = web3.utils.isHex(chainId) ? web3.utils.hexToNumber(chainId) : chainId;
+            const contract = contractAddress(networkId)
             await buyTokensForUser(data.web3, data.amount, data.referral,contract)
             dispatch({
                 type: BUY_TOKENS_SUCCESS,
