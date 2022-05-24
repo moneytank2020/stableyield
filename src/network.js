@@ -34,7 +34,6 @@ export const allNetworks = [
 ];
 
 export const contractAddress = (networkId) =>{
-  console.log("network id:",networkId)
   const network = allNetworks.find(n => n.id == networkId)
   return network ? network.contractAddress: ""
 }

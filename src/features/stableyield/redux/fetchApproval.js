@@ -45,7 +45,11 @@ export function fetchHasApproved(data) {
                 type: FETCH_HAS_APPROVED_BEGIN,
                 data: { status: true }
             })
-            var HasApproved = await hasApproved(data.web3)
+            let web3 = data.web3
+            let chainId = web3.currentProvider.chainId
+            let networkId = web3.utils.isHex(chainId) ? web3.utils.hexToNumber(chainId) : chainId;
+            const contract = contractAddress(networkId)
+            var HasApproved = await hasApproved(data.web3,contract)
             if (HasApproved) {
                 dispatch({
                     type: FETCH_HAS_APPROVED_SUCCESS,
