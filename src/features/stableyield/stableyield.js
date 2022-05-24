@@ -67,6 +67,8 @@ export default function StableYield() {
   useEffect(() => {
     const getApproval = () => {
       if (address && web3) {
+        console.log("web3:",web3)
+        console.log("networkId:",networkId)
         fetchHasApproved({ web3 })
       }
     }
