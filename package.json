@@ -76,6 +76,7 @@
     "getUSDC": "hardhat run --network localhost solidityscripts/binance/sendUSDC.js",
     "deployLocalnet": "hardhat run --network localhost solidityscripts/deploymentScripts/deploy.js",
     "deployStableYieldLocalnet": "hardhat run --network localhost solidityscripts/deploymentScripts/stableyield/deploy.js && hardhat run --network localhost solidityscripts/binance/sendUSDC.js && hardhat run --network localhost solidityscripts/binance/sendUSDCToContract.js",
+    "deployStableYieldMainnet": "hardhat run --network mainnet solidityscripts/deploymentScripts/stableyield/deploy.js",
     "deployTestnet": "hardhat run --network testnet solidityscripts/deploymentScripts/apex/deploy.js",
     "deployMainnet": "hardhat run --network mainnet solidityscripts/deploymentScripts/apex/deploy.js",
     "deployAshareMainNet": "hardhat run --network mainnet solidityscripts/deploymentScripts/ashare/deployAshare.js",

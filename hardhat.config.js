@@ -38,8 +38,8 @@ module.exports = {
       url: "http://127.0.0.1:8545"
     },
     mainnet: {
-      chainId:250,
-      url: "https://rpc.ftm.tools",
+      chainId:56,
+      url: "https://bsc-dataseed.binance.org/",
       accounts:[keys.key]
     },
     testnet: {
