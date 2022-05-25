@@ -80,21 +80,24 @@ export default function BuyCard() {
         buyTokensPending ||
         sellTokensPending)
     }
+
+    const isBuydsabled = () => {
+        return (
+            isButtonDisabled() ||
+            bondsForTokenMessage().disabled ||
+            buySettings.amount == 0 &&
+            isApproved)
+    }
     
     const bondsForTokenMessage = () =>{
-        let bonds = parseInt(fetchUserBondsValue)
-        console.log("fetchUserBondsValue:",fetchUserBondsValue)
-        console.log("fetchUserBalanceValue:",fetchUserBalanceValue)
-        console.log("buySettings.amount:",buySettings.amount)
-
         if(fetchUserBondsValue < fetchUserBalanceValue && buySettings.amount > 0){
-            return {class:classes.errorText, message:"Amount entered exceeds amount of liquidity in contract"}
+            return {disabled:true,class:classes.errorText, message:"Amount entered exceeds amount of liquidity in contract"}
         }else if(fetchUserBondsValue < fetchUserBalanceValue && buySettings.amount > 0){
-            return {class:classes.errorText, message:"Amount entered exceeds amount in users wallet"}
+            return {disabled:true,class:classes.errorText, message:"Amount entered exceeds amount in users wallet"}
         }else if(fetchUserBondsValue < 0 || buySettings.amount == 0){
-            return {class:classes.text, message:""}
+            return {disabled:false, class:classes.text, message:""}
         }else{
-            return {class:classes.text, message:`You receive: ${fetchBondsForTokensValue} BONDS`}
+            return {disabled:false, class:classes.text, message:`You receive: ${fetchBondsForTokensValue} BONDS`}
         }
     }
 
@@ -171,7 +174,7 @@ export default function BuyCard() {
                     {bondsForTokenMessage().message}
                 </Typography>
             </Grid>
-            <Button variant="contained" onClick={() => { handleClick() }} disabled={ isButtonDisabled() ? true : false } className={isApproved ? classes.buyButton : classes.approveButton}>{isApproved ? "BUY BONDS" : "APPROVE"}</Button>
+            <Button variant="contained" onClick={() => { handleClick() }} disabled={ isBuydsabled() ? true : false } className={isApproved ? classes.buyButton : classes.approveButton}>{isApproved ? "BUY BONDS" : "APPROVE"}</Button>
             <Divider className={classes.divider} />
             <Grid container direction="row">
                 <Grid item md={6} xs={6}>
