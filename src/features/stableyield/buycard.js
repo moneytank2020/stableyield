@@ -14,6 +14,7 @@ import { useBuyTokens } from './redux/buyTokens';
 import { useFetchUserTokenReward } from './redux/fetchUserTokenRewards';
 import { useReInvestBonds } from './redux/reinvestBonds';
 import { useSellTokens } from './redux/sellTokens';
+import classNames from 'classnames';
 
 const FETCH_INTERVAL_MS = 15 * 1000;
 
@@ -78,6 +79,23 @@ export default function BuyCard() {
         fetchHasApprovedPending || 
         buyTokensPending ||
         sellTokensPending)
+    }
+    
+    const bondsForTokenMessage = () =>{
+        let bonds = parseInt(fetchUserBondsValue)
+        console.log("fetchUserBondsValue:",fetchUserBondsValue)
+        console.log("fetchUserBalanceValue:",fetchUserBalanceValue)
+        console.log("buySettings.amount:",buySettings.amount)
+
+        if(fetchUserBondsValue < fetchUserBalanceValue && buySettings.amount > 0){
+            return {class:classes.errorText, message:"Amount entered exceeds amount of liquidity in contract"}
+        }else if(fetchUserBondsValue < fetchUserBalanceValue && buySettings.amount > 0){
+            return {class:classes.errorText, message:"Amount entered exceeds amount in users wallet"}
+        }else if(fetchUserBondsValue < 0 || buySettings.amount == 0){
+            return {class:classes.text, message:""}
+        }else{
+            return {class:classes.text, message:`You receive: ${fetchBondsForTokensValue} BONDS`}
+        }
     }
 
     return (
@@ -149,8 +167,8 @@ export default function BuyCard() {
                 </Typography>
             </Box>
             <Grid style={{ marginTop: 10 }} item md={12} xs={12}>
-                <Typography className={classes.text}>
-                    {parseInt(fetchBondsForTokensValue) > 0 ? `You receive: ${fetchBondsForTokensValue} BONDS` : ""}
+                <Typography className={bondsForTokenMessage().class}>
+                    {bondsForTokenMessage().message}
                 </Typography>
             </Grid>
             <Button variant="contained" onClick={() => { handleClick() }} disabled={ isButtonDisabled() ? true : false } className={isApproved ? classes.buyButton : classes.approveButton}>{isApproved ? "BUY BONDS" : "APPROVE"}</Button>

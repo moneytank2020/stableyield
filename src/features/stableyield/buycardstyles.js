@@ -1,4 +1,4 @@
-import { grey } from "@material-ui/core/colors";
+import { grey, red } from "@material-ui/core/colors";
 
 const styles = theme => ({
   cardContainer: {
@@ -25,6 +25,12 @@ const styles = theme => ({
     fontWeight: '550',
     marginBottom: 10,
     fontSize: 18 ,
+  },
+  errorText: {
+    fontWeight: '550',
+    marginBottom: 10,
+    fontSize: 18 ,
+    color:'#e00000'
   },
   valueText:{
     fontWeight: '700',
